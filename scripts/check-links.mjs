@@ -5,7 +5,6 @@ import { join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const OWN_ORIGIN = /^https?:\/\/josephkotzker\.com(?=[/?#]|$)/i;
-const CANONICAL_LINK = /<link\b[^>]*\brel\s*=\s*(?:"canonical"|'canonical')[^>]*>/gi;
 const ATTRIBUTE = /\b(href|srcset|src)\s*=\s*(?:"([^"]*)"|'([^']*)')/gi;
 
 async function* htmlFiles(dir) {
@@ -67,9 +66,7 @@ export async function findBrokenLinks(distDir) {
 
   const broken = [];
   for await (const file of htmlFiles(distDir)) {
-    let html = await readFile(file, 'utf8');
-    // The error page is served from /404.html, but its canonical URL is the unresolvable /404/. Skip only that tag.
-    if (relative(distDir, file) === '404.html') html = html.replace(CANONICAL_LINK, '');
+    const html = await readFile(file, 'utf8');
     for (const [, name, double, single] of html.matchAll(ATTRIBUTE)) {
       for (const url of candidates(name, double ?? single)) {
         const path = internalPath(url);

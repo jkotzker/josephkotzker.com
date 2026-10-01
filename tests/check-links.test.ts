@@ -97,16 +97,4 @@ describe('findBrokenLinks', () => {
       { file: 'index.html', href: '/../package.json', reason: 'path escapes the site root' },
     ]);
   });
-
-  it('ignores the canonical tag on 404.html only', async () => {
-    const canonical = '<link rel="canonical" href="https://josephkotzker.com/404/">';
-    const root = site({
-      '404.html': canonical + '<a href="/nope/">n</a>',
-      'other/index.html': canonical,
-    });
-    expect(await findBrokenLinks(root)).toEqual([
-      { file: '404.html', href: '/nope/' },
-      { file: 'other/index.html', href: 'https://josephkotzker.com/404/' },
-    ]);
-  });
 });
