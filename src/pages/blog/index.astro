@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { visiblePosts } from '../../lib/posts';
+
+const posts = visiblePosts(await getCollection('posts'), { includeDrafts: import.meta.env.DEV });
+---
+<Base title="Blog" description="Writing by Joseph Kotzker.">
+  <h1>Blog</h1>
+  {posts.length === 0 ? (
+    <p>No posts yet.</p>
+  ) : (
+    <ul>
+      {posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toISOString().slice(0, 10)}</time>
+          {post.data.draft && <strong>(draft)</strong>}
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>
