@@ -54,4 +54,12 @@ const podcasts = defineCollection({
   }),
 });
 
-export const collections = { posts, projects, podcasts };
+// The private jkotzker/resume repo is checked out to .resume/ in CI. Its content
+// is rendered only when its front matter says `public: true`, which is added in
+// Part 3 after the contact details are split out of resume.md.
+const resume = defineCollection({
+  loader: glob({ base: './.resume', pattern: 'resume.md' }),
+  schema: z.object({ public: z.boolean().default(false) }),
+});
+
+export const collections = { posts, projects, podcasts, resume };
