@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import type { Loader } from 'astro/loaders';
 import { parse } from 'yaml';
-import type { Result } from './result';
+import { errorMessage, type Result } from './result';
 
 export type CuratedEntry = Record<string, unknown> & { id: string };
 export type Enricher = (entry: CuratedEntry) => Promise<Result<Record<string, unknown>> | null>;
@@ -9,7 +9,8 @@ export type Enricher = (entry: CuratedEntry) => Promise<Result<Record<string, un
 /**
  * Loads a hand-maintained YAML list and adds build-time details to each entry.
  * Curated fields always win over fetched ones; a failed fetch logs a warning and
- * keeps the curated entry. Malformed curated data throws, failing the build.
+ * keeps the curated entry; so does fetched data that fails schema validation.
+ * Malformed curated data throws, failing the build.
  */
 export function curatedLoader(opts: { file: string; enrich: Enricher }): Loader {
   return {
@@ -28,12 +29,29 @@ export function curatedLoader(opts: { file: string; enrich: Enricher }): Loader 
         if (seen.has(entry.id)) throw new Error(`${opts.file}: duplicate id "${entry.id}"`);
         seen.add(entry.id);
 
-        const enriched = await opts.enrich(entry);
-        let data: Record<string, unknown> = entry;
-        if (enriched?.ok) data = { ...enriched.value, ...entry };
-        else if (enriched) logger.warn(`${entry.id}: enrichment skipped (${enriched.reason})`);
+        let enriched: Result<Record<string, unknown>> | null = null;
+        try {
+          enriched = await opts.enrich(entry);
+        } catch (e) {
+          logger.warn(`${entry.id}: enrichment skipped (${errorMessage(e)})`);
+        }
+        if (enriched && !enriched.ok) logger.warn(`${entry.id}: enrichment skipped (${enriched.reason})`);
 
-        store.set({ id: entry.id, data: await parseData({ id: entry.id, data }) });
+        let parsed: Record<string, unknown>;
+        if (enriched?.ok) {
+          try {
+            parsed = await parseData({ id: entry.id, data: { ...enriched.value, ...entry } });
+          } catch (e) {
+            logger.warn(
+              `${entry.id}: enrichment discarded (fetched data failed validation: ${errorMessage(e)})`,
+            );
+            parsed = await parseData({ id: entry.id, data: entry });
+          }
+        } else {
+          parsed = await parseData({ id: entry.id, data: entry });
+        }
+
+        store.set({ id: entry.id, data: parsed });
       }
     },
   };

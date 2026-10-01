@@ -11,7 +11,9 @@ function yamlFile(content: string): string {
   return path;
 }
 
-function fakeContext() {
+type ParseData = (arg: { id: string; data: Record<string, unknown> }) => Promise<Record<string, unknown>>;
+
+function fakeContext(parseData?: ParseData) {
   const entries = new Map<string, Record<string, unknown>>();
   const warnings: string[] = [];
   const ctx = {
@@ -22,7 +24,7 @@ function fakeContext() {
         return true;
       },
     },
-    parseData: async ({ data }: { id: string; data: Record<string, unknown> }) => data,
+    parseData: parseData ?? (async ({ data }) => data),
     logger: { warn: (m: string) => warnings.push(m), info: () => {}, error: () => {}, debug: () => {} },
   };
   return { entries, warnings, ctx };
@@ -91,5 +93,44 @@ describe('curatedLoader', () => {
     const { ctx } = fakeContext();
     const loader = curatedLoader({ file: yamlFile('- id: a\n- id: a\n'), enrich: async () => null });
     await expect(loader.load(ctx as never)).rejects.toThrow('duplicate id "a"');
+  });
+
+  it('discards enrichment and warns when merged data fails validation', async () => {
+    const { entries, warnings, ctx } = fakeContext(async ({ data }) => {
+      if (data.stars === 'bad') throw new Error('stars: expected number');
+      return data;
+    });
+    const loader = curatedLoader({
+      file: yamlFile('- id: alpha\n  name: Alpha\n'),
+      enrich: async () => ({ ok: true, value: { stars: 'bad' } }),
+    });
+    await loader.load(ctx as never);
+    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha' });
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toMatch(/^alpha: enrichment discarded/);
+  });
+
+  it('still fails when the curated data itself fails validation', async () => {
+    const { ctx } = fakeContext(async () => {
+      throw new Error('name: required');
+    });
+    const loader = curatedLoader({
+      file: yamlFile('- id: alpha\n'),
+      enrich: async () => ({ ok: true, value: { stars: 1 } }),
+    });
+    await expect(loader.load(ctx as never)).rejects.toThrow('name: required');
+  });
+
+  it('keeps the curated entry and warns when the enricher throws', async () => {
+    const { entries, warnings, ctx } = fakeContext();
+    const loader = curatedLoader({
+      file: yamlFile('- id: alpha\n  name: Alpha\n'),
+      enrich: async () => {
+        throw new Error('boom');
+      },
+    });
+    await loader.load(ctx as never);
+    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha' });
+    expect(warnings).toEqual(['alpha: enrichment skipped (boom)']);
   });
 });

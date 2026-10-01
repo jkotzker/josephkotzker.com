@@ -25,7 +25,7 @@ const projects = defineCollection({
   }),
   schema: z.object({
     name: z.string(),
-    url: z.string().url(),
+    url: z.url(),
     description: z.string(),
     repo: z.string().regex(/^[\w.-]+\/[\w.-]+$/, 'repo must be owner/name').optional(),
     stars: z.number().int().optional(),
@@ -44,12 +44,12 @@ const podcasts = defineCollection({
   }),
   schema: z.object({
     name: z.string(),
-    url: z.string().url(),
+    url: z.url(),
     role: z.string(),
     description: z.string(),
-    feed: z.string().url().optional(),
+    feed: z.url().optional(),
     latestEpisode: z
-      .object({ title: z.string(), url: z.string().url(), pubDate: z.coerce.date() })
+      .object({ title: z.string(), url: z.url(), pubDate: z.coerce.date() })
       .optional(),
   }),
 });
