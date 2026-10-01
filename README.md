@@ -1,43 +1,35 @@
-# Astro Starter Kit: Minimal
+# josephkotzker.com
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Source for https://josephkotzker.com, built with [Astro](https://astro.build) and deployed to GitHub Pages by GitHub Actions.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Prerequisites
 
-## 🚀 Project Structure
+Node.js at the version in `.nvmrc` (for example `nvm use`). Install dependencies with `npm ci`.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Commands
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- `npm run dev` starts the local dev server.
+- `npm run build` builds the site into `dist/`.
+- `npm test` runs the Vitest suite.
+- `npm run ci` runs type checking (`astro check`), tests, the build, and the post-build checks. This is the single gate CI runs, so a passing `npm run ci` locally means the same checks will pass in CI.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Content
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Posts live in `src/content/posts/` as Markdown with front matter: `title`, `description`, `pubDate`, and optionally `updatedDate`, `tags`, and `draft`. Posts with `draft: true` are excluded from production builds. This repository is public, so anything committed to it is visible regardless of its draft status; keep unready drafts uncommitted or on a branch.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Projects and podcasts are curated YAML in `src/data/` (`projects.yaml`, `podcasts.yaml`). At build time they are enriched from the GitHub API (repository metadata) and from podcast RSS feeds (latest episode). If a fetch fails, the page falls back to the curated fields.
 
-## 🧞 Commands
+## Resume
 
-All commands are run from the root of the project, from a terminal:
+CI checks out a private repository into `.resume/` (git-ignored) using the read-only deploy key stored in the `RESUME_DEPLOY_KEY` secret. The `/resume` page renders the content only when the front matter of `.resume/resume.md` has `public: true`; otherwise it shows a "coming soon" placeholder, which is marked `noindex`.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Workflows
 
-## 👀 Want to learn more?
+- `.github/workflows/deploy.yml` builds and deploys to GitHub Pages on every push to `main`, daily on a schedule (to refresh enrichment and pick up resume changes), and on manual dispatch.
+- `.github/workflows/ci.yml` runs `npm run ci` on pull requests.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+GitHub disables scheduled workflows in public repositories after 60 days without repository activity. After a quiet stretch, re-enable the daily run from the Actions tab or trigger the deploy workflow manually.
+
+## Scripts
+
+`scripts/` holds the post-build checks that run as part of `npm run ci`: `verify-dist.mjs` validates the built output, and `check-links.mjs` fails on any internal link that points at a file missing from `dist/`.

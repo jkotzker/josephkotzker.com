@@ -4,7 +4,7 @@ import { readdir, readFile, stat } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const OWN_ORIGIN = /^https?:\/\/josephkotzker\.com(?=[/?#]|$)/i;
+const OWN_ORIGIN = /^https?:\/\/(?:www\.)?josephkotzker\.com(?=[/?#]|$)/i;
 const ATTRIBUTE = /\b(href|srcset|src)\s*=\s*(?:"([^"]*)"|'([^']*)')/gi;
 
 async function* htmlFiles(dir) {

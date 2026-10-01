@@ -67,6 +67,19 @@ describe('findBrokenLinks', () => {
     ]);
   });
 
+  it('treats the www host of the own origin as internal', async () => {
+    const root = site({
+      'index.html':
+        '<a href="https://www.josephkotzker.com/missing/">a</a>' +
+        '<a href="https://www.josephkotzker.com/about/">ok</a>' +
+        '<a href="https://www.josephkotzker.com.evil.test/x/">x</a>',
+      'about/index.html': '',
+    });
+    expect(await findBrokenLinks(root)).toEqual([
+      { file: 'index.html', href: 'https://www.josephkotzker.com/missing/' },
+    ]);
+  });
+
   it('does not treat a directory without index.html as a target', async () => {
     const root = site({ 'index.html': '<a href="/blog">b</a><a href="/blog/">c</a>', 'blog/post.html': '' });
     expect(await findBrokenLinks(root)).toEqual([
