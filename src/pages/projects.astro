@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const projects = await getCollection('projects');
+---
+<Base title="Projects" description="Software projects by Joseph Kotzker.">
+  <h1>Projects</h1>
+  {projects.length === 0 ? (
+    <p>Coming soon.</p>
+  ) : (
+    <ul>
+      {projects.map(({ data }) => (
+        <li>
+          <a href={data.url}>{data.name}</a> — {data.description}
+          {data.stars !== undefined && <span>★ {data.stars}</span>}
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>

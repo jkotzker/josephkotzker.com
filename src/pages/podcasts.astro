@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const podcasts = await getCollection('podcasts');
+---
+<Base title="Podcasts" description="Podcasts by Joseph Kotzker.">
+  <h1>Podcasts</h1>
+  {podcasts.length === 0 ? (
+    <p>Coming soon.</p>
+  ) : (
+    <ul>
+      {podcasts.map(({ data }) => (
+        <li>
+          <a href={data.url}>{data.name}</a> ({data.role}) — {data.description}
+          {data.latestEpisode && (
+            <p>Latest: <a href={data.latestEpisode.url}>{data.latestEpisode.title}</a></p>
+          )}
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>
