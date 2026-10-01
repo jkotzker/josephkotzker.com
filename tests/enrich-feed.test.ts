@@ -60,6 +60,11 @@ describe('fetchLatestEpisode', () => {
     expect(await fetchLatestEpisode('https://x.test/feed', { fetch })).toEqual({ ok: false, reason: 'fetch failed: timeout' });
   });
 
+  it('reports a body read failure', async () => {
+    const fetch = vi.fn(async () => ({ ok: true, status: 200, text: async () => { throw new Error('reset'); } } as unknown as Response));
+    expect(await fetchLatestEpisode('https://x.test/feed', { fetch })).toEqual({ ok: false, reason: 'fetch failed: reset' });
+  });
+
   it('parses a successful response', async () => {
     const body = rssDoc(`<item><title>Ep</title><link>https://x.test/1</link><pubDate>Mon, 01 Sep 2025 10:00:00 GMT</pubDate></item>`);
     const fetch = vi.fn(async () => new Response(body, { status: 200 }));

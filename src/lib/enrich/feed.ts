@@ -14,7 +14,13 @@ export async function fetchLatestEpisode(feedUrl: string, opts: { fetch?: FetchF
     return { ok: false, reason: `fetch failed: ${errorMessage(e)}` };
   }
   if (!res.ok) return { ok: false, reason: `HTTP ${res.status}` };
-  return parseLatestEpisode(await res.text());
+  let xml: string;
+  try {
+    xml = await res.text();
+  } catch (e) {
+    return { ok: false, reason: `fetch failed: ${errorMessage(e)}` };
+  }
+  return parseLatestEpisode(xml);
 }
 
 export function parseLatestEpisode(xml: string): Result<Episode> {
