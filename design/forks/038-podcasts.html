@@ -1,25 +1,22 @@
 <!-- design-direction
-id: 031
+id: 038
 kind: fork
-parent: forks/030-tuned-light-dark-bg.html
-title: 030 with light-mode muted text and link darkened to pass WCAG AA
+parent: forks/032-shell-home-entry.html
+title: Podcasts page
 prompt: |
-  Copy forks/030. Change only two light-scheme colours, each darkened in HLS lightness with hue and
-  saturation held, to the first value reaching 4.5:1 against the #ebebeb background: muted
-  #77716d -> #6f6966 (4.0 -> 4.53:1) and link #286be1 -> #1f63dc (4.1 -> 4.54:1). Dark scheme and
-  everything else unchanged.
+  Joseph: "Let's look at the designing the additional pages of the site next. [...] I would
+  generally speaking like the design of the site to be very consistent throughout, so keep that as
+  a guiding principle when proceeding with the next pages." On labels: "It should be Blog and
+  Podcasts in the sidebar, that's what I would prefer for the label AND the routes." Shell verdict:
+  "032 is good. And yes, add the scrollbar fix".
 
-  Joseph's words: "Apply the passing values as fork 031".
+  Batch round. Copy forks/032, add scrollbar-gutter: stable to html. Column: h1 "Podcasts"
+  and one entry in the home Podcast style (name link — role), its description, and the latest
+  episode (title link and date) — the fields in src/content.config.ts.
 status: active
-created: 2026-10-01
+created: 2026-10-02
 notes: |
-  Minimal accessibility correction to Joseph's tuned light palette (030). All running text in both
-  schemes now meets WCAG AA.
-  ADOPTED 2026-10-01. At convergence its literal values were moved to design/tokens.css and the
-  page rewritten to consume them (pre-rewrite render verified identical); the prompt above describes
-  the design, not the rewrite.
-  SUPERSEDED 2026-10-02: the adopted design is now the page set 053–059 (Joseph: "I'm ready to mark
-  this current state as adopted"); 031 stays as the origin of every page's shell.
+  One podcast exists today; layout holds for more. Same entry spacing as 037.
 screenshot:
 -->
 <!doctype html>
@@ -27,11 +24,11 @@ screenshot:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joseph Kotzker</title>
+<title>Podcasts — Joseph Kotzker</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
   /* Every value comes from ../tokens.css; the 64rem breakpoint stays literal (media queries cannot read custom properties). */
-  html { background: var(--color-bg); color: var(--color-text); }
+  html { background: var(--color-bg); color: var(--color-text); scrollbar-gutter: stable; }
   body {
     margin: 0 auto; padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom); max-width: var(--measure);
     font: var(--text-base)/var(--leading-body) var(--font-body);
@@ -62,14 +59,16 @@ screenshot:
   nav.side .icons svg { width: 20px; height: 20px; }
   .headshot { width: var(--headshot-size); height: var(--headshot-size); border-radius: var(--radius-round); background: var(--color-rule); color: var(--color-text-muted); display: grid; place-items: center; margin: 0 0 1.2em; overflow: hidden; }
   .headshot svg { width: var(--headshot-glyph); height: var(--headshot-glyph); }
+  .entries li { margin-bottom: 1em; }
   footer { margin-top: var(--space-footer); padding-top: 1em; border-top: var(--border-hairline) solid var(--color-rule); color: var(--color-text-muted); font-size: var(--text-small); }
 </style>
 </head>
 <body>
   <nav class="side" aria-label="Sections">
-    <a href="#writing"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M13 21h8" /> <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /> </svg>Writing</a>
-    <a href="#podcast"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 19v3" /> <path d="M19 10v2a7 7 0 0 1-14 0v-2" /> <rect x="9" y="2" width="6" height="13" rx="3" /> </svg>Podcast</a>
-    <a href="#projects"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 10.5 8 13l2 2.5" /> <path d="m14 10.5 2 2.5-2 2.5" /> <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z" /> </svg>Projects</a>
+    <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /> <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /> </svg>Home</a>
+    <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M13 21h8" /> <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /> </svg>Blog</a>
+    <a href="#" aria-current="page"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 19v3" /> <path d="M19 10v2a7 7 0 0 1-14 0v-2" /> <rect x="9" y="2" width="6" height="13" rx="3" /> </svg>Podcasts</a>
+    <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 10.5 8 13l2 2.5" /> <path d="m14 10.5 2 2.5-2 2.5" /> <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z" /> </svg>Projects</a>
     <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /> </svg>Résumé</a>
     <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 11a9 9 0 0 1 9 9" /> <path d="M4 4a16 16 0 0 1 16 16" /> <circle cx="5" cy="19" r="1" /> </svg>RSS</a>
     <span class="label">Elsewhere</span>
@@ -80,26 +79,11 @@ screenshot:
     <a href="https://trakt.tv/users/jkotzker"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" /> <path d="M8 4l0 16" /> <path d="M16 4l0 16" /> <path d="M4 8l4 0" /> <path d="M4 16l4 0" /> <path d="M4 12l16 0" /> <path d="M16 8l4 0" /> <path d="M16 16l4 0" /> </svg>Trakt</a>
     <a href="https://www.linkedin.com/in/josephkotzker/"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M8 11v5" /> <path d="M8 8v.01" /> <path d="M12 16v-5" /> <path d="M16 16v-3a2 2 0 1 0 -4 0" /> <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4l0 -10" /> </svg>LinkedIn</a>
   </nav>
-  <div class="headshot" role="img" aria-label="Headshot placeholder"><svg class="icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /> </svg></div>
-  <h1>Joseph Kotzker</h1>
-  <p>I'm a software engineer. I co-host <a href="https://www.inreversecast.com">In Reverse</a> with Zach Kotzker, a podcast about watching the Fast &amp; Furious films for the first time, newest first.</p>
-
-  <h2 id="writing">Writing</h2>
-  <ul>
-    <li><time>Sample date</time> <a href="#">Sample post title, for layout</a></li>
-    <li><time>Sample date</time> <a href="#">A second sample post, somewhat longer in title</a></li>
-    <li><time>Sample date</time> <a href="#">Third sample</a></li>
-  </ul>
-
-  <h2 id="podcast">Podcast</h2>
-  <ul>
-    <li><a href="https://www.inreversecast.com">In Reverse</a> <span class="meta">— co-host, with Zach Kotzker</span></li>
-  </ul>
-
-  <h2 id="projects">Projects</h2>
-  <ul>
-    <li><a href="#">Sample project</a> <span class="meta">— one line on what it does</span></li>
-    <li><a href="#">Another sample project</a> <span class="meta">— one line on what it does</span></li>
+  <h1>Podcasts</h1>
+  <ul class="entries">
+    <li><a href="https://www.inreversecast.com">In Reverse</a> <span class="meta">— co-host, with Zach Kotzker</span><br>
+      Watching the Fast &amp; Furious films for the first time, newest first.<br>
+      <span class="meta">Latest: <a href="#">Sample episode title</a> · Sep 2026</span></li>
   </ul>
 
   <footer><a href="#">RSS</a> · josephkotzker.com</footer>

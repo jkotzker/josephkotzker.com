@@ -1,5 +1,6 @@
 /* Design tokens — josephkotzker.com
-   Extracted 2026-10-01 from the adopted prototype, forks/031-light-contrast-aa.html.
+   Extracted 2026-10-01 from the adopted prototype, forks/031-light-contrast-aa.html; extended
+   2026-10-02 from the adopted page set forks/053–059 (web fonts, labelled lists, long-form text).
    Named by role, not by value. Everything built after convergence uses these and defines no
    colours or fonts of its own. Change a value here only when a fork that changes it is adopted
    (design/direction.md records which). */
@@ -16,12 +17,14 @@
   --color-rule: #cccbc4;        /* footer rule, headshot placeholder fill */
 
   /* Type */
-  --font-body: ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+  --font-body: "Source Serif 4", ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+  --font-mono: "Source Code Pro", ui-monospace, "SF Mono", Menlo, Consolas, monospace;  /* inline and block code */
   --text-base: 1.15rem;         /* body and the name (h1) */
   --text-heading: 1.075rem;     /* section headings (h2) */
   --text-nav: 0.95rem;          /* sidebar */
   --text-label: 0.8rem;         /* sidebar group label ("Elsewhere") */
   --text-small: 0.9em;          /* dates, descriptions, footer — relative to their context */
+  --text-code: 0.85em;          /* inline code, relative to its paragraph */
   --leading-body: 1.65;
   --leading-nav: 2;
   --weight-bold: 700;
@@ -44,6 +47,14 @@
   --space-paragraph: 1em;
   --space-item: 0.35em;           /* between list items */
   --space-footer: 4em;            /* above the footer rule */
+  --space-subheading-before: 1.8em; /* above subheadings (h3) in posts and the résumé */
+  --space-block: 1.4em;           /* above and below figures */
+  --space-footnotes: 2.4em;       /* above the footnotes rule */
+  --space-label: 0.75em;          /* between a list label (date, episode number) and its title */
+  --indent-list: 1.3em;           /* bulleted and numbered lists in long-form text */
+  --indent-quote: 1em;            /* blockquote text from its rule */
+  --label-width-date: 10ch;       /* an ISO date, YYYY-MM-DD */
+  --label-width-episode: 6ch;     /* a season/episode number, up to S3 E10 */
 
   /* Lines, focus, shapes, icons */
   --border-hairline: 1px;
