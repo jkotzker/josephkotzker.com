@@ -1,0 +1,313 @@
+<!-- Playground built from forks/029-outline-icons-a11y.html (2026-10-01). Not a prototype; its output is the copied :root block. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<style>
+  /* Values identical to forks/029; hoisted to custom properties so the panel can drive them. */
+  :root {
+    --bg: #fdfcfa; --ink: #1d1c1a; --muted: #6f6b64; --link: #1f4fa3; --rule: #e6e2da; --hot: #1d1c1a;
+    --font-body: ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+    --font-side: ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+    --text-body: 1.15rem; --leading: 1.65; --text-h2: 1.075rem;
+    --text-side: .95rem; --side-leading: 2; --label-opacity: 1;
+    --measure: 34rem; --side-w: 7.25rem; --side-gap: 2.25rem; --side-top: 12vh; --edge-inset: 2rem;
+    --headshot: 96px;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-scheme="light"]) { --bg: #171614; --ink: #e9e6e0; --muted: #929292; --link: #00c7fc; --rule: #494949; --hot: #e9e6e0; }
+  }
+  :root[data-scheme="dark"] { --bg: #171614; --ink: #e9e6e0; --muted: #929292; --link: #00c7fc; --rule: #494949; --hot: #e9e6e0; }
+  :root[data-scheme="light"] { color-scheme: light; }
+  :root[data-scheme="dark"] { color-scheme: dark; }
+  html { background: var(--bg); color: var(--ink); }
+  body {
+    margin: 0 auto; padding: 12vh 20px 8vh; max-width: var(--measure);
+    font: var(--text-body)/var(--leading) var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: var(--text-body); font-weight: 700; margin: 0 0 1.4em; }
+  h2 { font-size: var(--text-h2); font-weight: 700; margin: 2.6em 0 .6em; }
+  p { margin: 0 0 1em; }
+  a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+  a:hover { text-decoration-thickness: 2px; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin: 0 0 .35em; }
+  time, .meta { color: var(--muted); font-size: .9em; }
+  li time { display: inline-block; min-width: 6.5em; font-variant-numeric: tabular-nums; }
+  nav.side {
+    position: fixed; top: var(--side-top); width: var(--side-w);
+    left: max(1rem, calc(50% - var(--measure) / 2 - var(--side-gap) - var(--side-w)));
+    font: var(--text-side)/var(--side-leading) var(--font-side);
+    max-height: calc(100vh - var(--side-top) - 1rem); overflow-y: auto; padding: 4px 6px 4px 4px; margin: -4px 0 0 -4px;
+  }
+  :root.edge nav.side { left: var(--edge-inset); }
+  nav.side a { display: block; color: var(--muted); text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 2px; }
+  nav.side a:hover, nav.side a[aria-current] { color: var(--hot); }
+  nav.side .label { display: block; margin-top: 1.4em; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); opacity: var(--label-opacity); }
+  @media (max-width: 64rem) {
+    body { padding-top: 6vh; }
+    nav.side { position: static; width: auto; max-height: none; overflow: visible; padding: 0; display: flex; flex-wrap: wrap; gap: 0 1.1rem; margin: 0 0 2.5em; }
+    nav.side .label { flex-basis: 100%; margin-top: .6em; }
+  }
+  nav.side .navicon { width: 1em; height: 1em; vertical-align: -.14em; margin-right: .5em; }
+  nav.side .icons { display: flex; flex-wrap: wrap; gap: .75rem .85rem; margin-top: .55em; }
+  nav.side .icons a { display: inline-flex; }
+  nav.side .icons svg { width: 20px; height: 20px; }
+  .headshot { width: var(--headshot); height: var(--headshot); border-radius: 50%; background: var(--rule); color: var(--muted); display: grid; place-items: center; margin: 0 0 1.2em; overflow: hidden; }
+  .headshot svg { width: 46%; height: 46%; }
+  footer { margin-top: 4em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9em; }
+
+  /* ---- playground panel: fixed neutral colours so tuning the page never hides the controls ---- */
+  #pg { position: fixed; right: 12px; bottom: 12px; width: 300px; max-height: calc(100vh - 24px); overflow: auto;
+    background: #ffffff; color: #1a1a1a; border: 1px solid #cfcfcf; border-radius: 10px; box-shadow: 0 6px 24px rgb(0 0 0 / .18);
+    font: 12px/1.35 -apple-system, system-ui, sans-serif; z-index: 10; color-scheme: light; }
+  #pg.collapsed .body { display: none; }
+  #pg header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid #e3e3e3; position: sticky; top: 0; background: #fff; }
+  #pg header b { font-size: 12px; }
+  #pg button { font: inherit; padding: 3px 8px; border: 1px solid #bdbdbd; border-radius: 5px; background: #f6f6f6; color: #1a1a1a; cursor: pointer; }
+  #pg button:hover { background: #ececec; }
+  #pg .body { padding: 6px 10px 10px; }
+  #pg h3 { margin: 10px 0 4px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #6a6a6a; }
+  #pg .row { display: grid; grid-template-columns: 92px 1fr auto; gap: 6px; align-items: center; margin: 3px 0; }
+  #pg .row label { color: #333; }
+  #pg .row input[type=range] { width: 100%; }
+  #pg .row output { font-variant-numeric: tabular-nums; color: #555; min-width: 52px; text-align: right; }
+  #pg .row select { width: 100%; font: inherit; }
+  #pg .crow { display: grid; grid-template-columns: 92px 28px 1fr; gap: 6px; align-items: center; margin: 3px 0; }
+  #pg .crow input[type=color] { width: 28px; height: 22px; padding: 0; border: 1px solid #bdbdbd; border-radius: 4px; background: none; }
+  #pg .crow input[type=text] { font: 11px ui-monospace, Menlo, monospace; width: 100%; padding: 2px 4px; border: 1px solid #cfcfcf; border-radius: 4px; }
+  #pg .note { color: #6a6a6a; margin: 2px 0 6px; }
+  #pg .actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  #pg pre { margin: 8px 0 0; padding: 6px; background: #f4f4f4; border: 1px solid #e0e0e0; border-radius: 5px; font: 10.5px/1.4 ui-monospace, Menlo, monospace; white-space: pre-wrap; max-height: 180px; overflow: auto; user-select: all; }
+</style>
+</head>
+<body>
+  <nav class="side" aria-label="Sections">
+    <a href="#writing"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M13 21h8" /> <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /> </svg>Writing</a>
+    <a href="#podcast"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 19v3" /> <path d="M19 10v2a7 7 0 0 1-14 0v-2" /> <rect x="9" y="2" width="6" height="13" rx="3" /> </svg>Podcast</a>
+    <a href="#projects"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 10.5 8 13l2 2.5" /> <path d="m14 10.5 2 2.5-2 2.5" /> <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z" /> </svg>Projects</a>
+    <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /> </svg>Résumé</a>
+    <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 11a9 9 0 0 1 9 9" /> <path d="M4 4a16 16 0 0 1 16 16" /> <circle cx="5" cy="19" r="1" /> </svg>RSS</a>
+    <span class="label">Elsewhere</span>
+    <a href="https://github.com/jkotzker"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /> </svg>GitHub</a>
+    <a href="https://hachyderm.io/@kotzker"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944" /> <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" /> </svg>Mastodon</a>
+    <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M6.335 5.144c-1.654 -1.199 -4.335 -2.127 -4.335 .826c0 .59 .35 4.953 .556 5.661c.713 2.463 3.13 2.75 5.444 2.369c-4.045 .665 -4.889 3.208 -2.667 5.41c1.03 1.018 1.913 1.59 2.667 1.59c2 0 3.134 -2.769 3.5 -3.5c.333 -.667 .5 -1.167 .5 -1.5c0 .333 .167 .833 .5 1.5c.366 .731 1.5 3.5 3.5 3.5c.754 0 1.637 -.571 2.667 -1.59c2.222 -2.203 1.378 -4.746 -2.667 -5.41c2.314 .38 4.73 .094 5.444 -2.369c.206 -.708 .556 -5.072 .556 -5.661c0 -2.953 -2.68 -2.025 -4.335 -.826c-2.293 1.662 -4.76 5.048 -5.665 6.856c-.905 -1.808 -3.372 -5.194 -5.665 -6.856" /> </svg>Bluesky</a>
+    <a href="https://www.instagram.com/josephkotzker/"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4l0 -8" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /> <path d="M16.5 7.5v.01" /> </svg>Instagram</a>
+    <a href="https://trakt.tv/users/jkotzker"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" /> <path d="M8 4l0 16" /> <path d="M16 4l0 16" /> <path d="M4 8l4 0" /> <path d="M4 16l4 0" /> <path d="M4 12l16 0" /> <path d="M16 8l4 0" /> <path d="M16 16l4 0" /> </svg>Trakt</a>
+    <a href="https://www.linkedin.com/in/josephkotzker/"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M8 11v5" /> <path d="M8 8v.01" /> <path d="M12 16v-5" /> <path d="M16 16v-3a2 2 0 1 0 -4 0" /> <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4l0 -10" /> </svg>LinkedIn</a>
+  </nav>
+  <div class="headshot" role="img" aria-label="Headshot placeholder"><svg class="icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /> </svg></div>
+  <h1>Joseph Kotzker</h1>
+  <p>I'm a software engineer. I co-host <a href="https://www.inreversecast.com">In Reverse</a> with Zach Kotzker, a podcast about watching the Fast &amp; Furious films for the first time, newest first.</p>
+
+  <h2 id="writing">Writing</h2>
+  <ul>
+    <li><time>Sample date</time> <a href="#">Sample post title, for layout</a></li>
+    <li><time>Sample date</time> <a href="#">A second sample post, somewhat longer in title</a></li>
+    <li><time>Sample date</time> <a href="#">Third sample</a></li>
+  </ul>
+
+  <h2 id="podcast">Podcast</h2>
+  <ul>
+    <li><a href="https://www.inreversecast.com">In Reverse</a> <span class="meta">— co-host, with Zach Kotzker</span></li>
+  </ul>
+
+  <h2 id="projects">Projects</h2>
+  <ul>
+    <li><a href="#">Sample project</a> <span class="meta">— one line on what it does</span></li>
+    <li><a href="#">Another sample project</a> <span class="meta">— one line on what it does</span></li>
+  </ul>
+
+  <footer><a href="#">RSS</a> · josephkotzker.com</footer>
+
+<aside id="pg" aria-label="Design playground controls">
+  <header><b>Playground · 029</b><span><button type="button" id="pg-toggle">Hide</button></span></header>
+  <div class="body">
+    <h3>Colour</h3>
+    <div class="row"><label for="pg-scheme">Editing</label>
+      <select id="pg-scheme"><option value="light">Light scheme</option><option value="dark">Dark scheme</option></select><span></span></div>
+    <p class="note">Colour fields edit the scheme shown. The page previews that scheme regardless of the OS setting.</p>
+    <div id="pg-colours"></div>
+
+    <h3>Type</h3>
+    <div id="pg-type"></div>
+
+    <h3>Layout</h3>
+    <div id="pg-layout"></div>
+
+    <div class="actions">
+      <button type="button" id="pg-copy">Copy :root block</button>
+      <button type="button" id="pg-reset">Reset to 029</button>
+    </div>
+    <pre id="pg-out" aria-label="Current values"></pre>
+  </div>
+</aside>
+<script>
+(() => {
+  const KEY = 'design-playground:029-tune';
+  const COLOURS = [
+    ['--bg', 'Background'], ['--ink', 'Text'], ['--muted', 'Muted text'],
+    ['--link', 'Link'], ['--rule', 'Rules / fills'], ['--hot', 'Sidebar hover'],
+  ];
+  const DEFAULT_COLOURS = {
+    light: { '--bg': '#fdfcfa', '--ink': '#1d1c1a', '--muted': '#6f6b64', '--link': '#1f4fa3', '--rule': '#e6e2da', '--hot': '#1d1c1a' },
+    dark:  { '--bg': '#171614', '--ink': '#e9e6e0', '--muted': '#929292', '--link': '#00c7fc', '--rule': '#494949', '--hot': '#e9e6e0' },
+  };
+  const SYS_SERIF = 'ui-serif, "Iowan Old Style", "Charter", Georgia, serif';
+  const FONTS = [
+    ['System serif (023)', SYS_SERIF, null],
+    ['Iowan Old Style', '"Iowan Old Style", Georgia, serif', null],
+    ['Charter', '"Charter", "Bitstream Charter", Georgia, serif', null],
+    ['Georgia', 'Georgia, serif', null],
+    ['Source Serif 4', '"Source Serif 4", Georgia, serif', 'Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400'],
+    ['Newsreader (002)', '"Newsreader", Georgia, serif', 'Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400'],
+    ['Literata', '"Literata", Georgia, serif', 'Literata:ital,opsz,wght@0,7..72,400;0,7..72,700;1,7..72,400'],
+    ['IBM Plex Serif', '"IBM Plex Serif", Georgia, serif', 'IBM+Plex+Serif:ital,wght@0,400;0,700;1,400'],
+    ['System sans (010)', 'system-ui, -apple-system, "Helvetica Neue", sans-serif', null],
+    ['IBM Plex Sans (002 rail)', '"IBM Plex Sans", system-ui, sans-serif', 'IBM+Plex+Sans:wght@400;500;700'],
+  ];
+  // [var, label, min, max, step, unit, default]
+  const TYPE = [
+    ['--text-body', 'Body size', 0.9, 1.5, 0.0125, 'rem', 1.15],
+    ['--leading', 'Line height', 1.3, 2.0, 0.05, '', 1.65],
+    ['--text-h2', 'Section head', 0.8, 1.6, 0.025, 'rem', 1.075],
+    ['--text-side', 'Sidebar size', 0.75, 1.2, 0.025, 'rem', 0.95],
+    ['--side-leading', 'Sidebar lines', 1.3, 2.8, 0.05, '', 2],
+    ['--label-opacity', 'Label opacity', 0.4, 1, 0.05, '', 1],
+  ];
+  const LAYOUT = [
+    ['--measure', 'Line width', 26, 48, 0.5, 'rem', 34],
+    ['--side-gap', 'Sidebar gap', 1, 10, 0.25, 'rem', 2.25],
+    ['--side-w', 'Sidebar width', 6, 14, 0.25, 'rem', 7.25],
+    ['--side-top', 'Sidebar top', 2, 30, 1, 'vh', 12],
+    ['--edge-inset', 'Edge inset', 0.5, 8, 0.25, 'rem', 2],
+    ['--headshot', 'Headshot', 0, 160, 4, 'px', 96],
+  ];
+  const DEFAULTS = {
+    scheme: 'light', edge: false, fontBody: 0, fontSide: 0,
+    colours: JSON.parse(JSON.stringify(DEFAULT_COLOURS)),
+    ranges: Object.fromEntries([...TYPE, ...LAYOUT].map(r => [r[0], r[6]])),
+  };
+
+  let state;
+  try { state = JSON.parse(localStorage.getItem(KEY)) || null; } catch { state = null; }
+  if (!state || !state.colours || !state.ranges) state = JSON.parse(JSON.stringify(DEFAULTS));
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+
+  const root = document.documentElement;
+  const loaded = new Set();
+  const loadFont = (i) => {
+    const spec = FONTS[i][2];
+    if (!spec || loaded.has(spec)) return;
+    loaded.add(spec);
+    const l = document.createElement('link');
+    l.rel = 'stylesheet'; l.href = `https://fonts.googleapis.com/css2?family=${spec}&display=swap`;
+    document.head.appendChild(l);
+  };
+
+  // ---- build controls ----
+  const colourBox = document.getElementById('pg-colours');
+  const colourInputs = {};
+  for (const [v, label] of COLOURS) {
+    const row = document.createElement('div'); row.className = 'crow';
+    row.innerHTML = `<label>${label}</label><input type="color" aria-label="${label} colour"><input type="text" aria-label="${label} value" spellcheck="false">`;
+    const [, pick, text] = row.children;
+    pick.addEventListener('input', () => { state.colours[state.scheme][v] = pick.value; text.value = pick.value; apply(); });
+    text.addEventListener('change', () => { state.colours[state.scheme][v] = text.value.trim(); apply(); });
+    colourInputs[v] = { pick, text };
+    colourBox.appendChild(row);
+  }
+
+  const mkSelect = (box, label, key) => {
+    const row = document.createElement('div'); row.className = 'row';
+    row.innerHTML = `<label>${label}</label><select>${FONTS.map((f, i) => `<option value="${i}">${f[0]}</option>`).join('')}</select><span></span>`;
+    const sel = row.children[1];
+    sel.addEventListener('change', () => { state[key] = +sel.value; apply(); });
+    box.appendChild(row); return sel;
+  };
+  const typeBox = document.getElementById('pg-type');
+  const fontBodySel = mkSelect(typeBox, 'Body font', 'fontBody');
+  const fontSideSel = mkSelect(typeBox, 'Sidebar font', 'fontSide');
+
+  const rangeInputs = {};
+  const mkRanges = (box, list) => {
+    for (const [v, label, min, max, step, unit] of list) {
+      const row = document.createElement('div'); row.className = 'row';
+      row.innerHTML = `<label>${label}</label><input type="range" min="${min}" max="${max}" step="${step}" aria-label="${label}"><output></output>`;
+      const [, input, out] = row.children;
+      input.addEventListener('input', () => { state.ranges[v] = +input.value; apply(); });
+      rangeInputs[v] = { input, out, unit };
+      box.appendChild(row);
+    }
+  };
+  mkRanges(typeBox, TYPE);
+  const layoutBox = document.getElementById('pg-layout');
+  const edgeRow = document.createElement('div'); edgeRow.className = 'row';
+  edgeRow.innerHTML = `<label>Sidebar at</label><select><option value="0">Beside column (029)</option><option value="1">Window edge</option></select><span></span>`;
+  const edgeSel = edgeRow.children[1];
+  edgeSel.addEventListener('change', () => { state.edge = edgeSel.value === '1'; apply(); });
+  layoutBox.appendChild(edgeRow);
+  mkRanges(layoutBox, LAYOUT);
+  const layoutNote = document.createElement('p'); layoutNote.className = 'note';
+  layoutNote.textContent = '"Sidebar gap" applies beside the column; "Edge inset" applies at the window edge. Below 64rem wide the sidebar becomes a row, as in 029.';
+  layoutBox.appendChild(layoutNote);
+
+  const schemeSel = document.getElementById('pg-scheme');
+  schemeSel.addEventListener('change', () => { state.scheme = schemeSel.value; apply(); });
+
+  // ---- apply + output ----
+  const val = (v) => { const r = rangeInputs[v]; return `${+state.ranges[v].toFixed(4)}${r.unit}`; };
+  function block() {
+    const L = state.colours.light, D = state.colours.dark;
+    const ranges = [...TYPE, ...LAYOUT].map(r => `  ${r[0]}: ${val(r[0])};`).join('\n');
+    return `:root {\n${COLOURS.map(([v]) => `  ${v}: ${L[v]};`).join('\n')}\n  --font-body: ${FONTS[state.fontBody][1]};\n  --font-side: ${FONTS[state.fontSide][1]};\n${ranges}\n}\n` +
+      `@media (prefers-color-scheme: dark) {\n  :root {\n${COLOURS.map(([v]) => `    ${v}: ${D[v]};`).join('\n')}\n  }\n}\n` +
+      `/* sidebar position: ${state.edge ? 'window edge (uses --edge-inset)' : 'beside the column (uses --side-gap)'} */`;
+  }
+  function apply() {
+    root.dataset.scheme = state.scheme;
+    root.classList.toggle('edge', state.edge);
+    const C = state.colours[state.scheme];
+    for (const [v] of COLOURS) {
+      root.style.setProperty(v, C[v]);
+      const { pick, text } = colourInputs[v];
+      if (/^#[0-9a-f]{6}$/i.test(C[v])) pick.value = C[v];
+      if (document.activeElement !== text) text.value = C[v];
+    }
+    loadFont(state.fontBody); loadFont(state.fontSide);
+    root.style.setProperty('--font-body', FONTS[state.fontBody][1]);
+    root.style.setProperty('--font-side', FONTS[state.fontSide][1]);
+    fontBodySel.value = state.fontBody; fontSideSel.value = state.fontSide;
+    for (const v in rangeInputs) {
+      root.style.setProperty(v, val(v));
+      rangeInputs[v].input.value = state.ranges[v];
+      rangeInputs[v].out.textContent = val(v);
+    }
+    schemeSel.value = state.scheme; edgeSel.value = state.edge ? '1' : '0';
+    document.getElementById('pg-out').textContent = block();
+    save();
+  }
+
+  document.getElementById('pg-copy').addEventListener('click', async (e) => {
+    try { await navigator.clipboard.writeText(block()); e.target.textContent = 'Copied'; }
+    catch { e.target.textContent = 'Select the text below'; }
+    setTimeout(() => { e.target.textContent = 'Copy :root block'; }, 1600);
+  });
+  document.getElementById('pg-reset').addEventListener('click', () => {
+    state = JSON.parse(JSON.stringify(DEFAULTS)); apply();
+  });
+  const panel = document.getElementById('pg');
+  document.getElementById('pg-toggle').addEventListener('click', (e) => {
+    panel.classList.toggle('collapsed');
+    e.target.textContent = panel.classList.contains('collapsed') ? 'Show' : 'Hide';
+  });
+  apply();
+})();
+</script>
+</body>
+</html>

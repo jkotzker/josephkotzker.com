@@ -1,0 +1,119 @@
+<!-- design-direction
+id: 007
+kind: fork
+parent: explore/002-rail-and-column.html
+title: 002 with rail and column centred as one unit
+prompt: |
+  Copy explore/002. Change only the layout: the rail and the reading column become one centred unit
+  (max width about 60rem) instead of the rail running full-height down the left edge of the window
+  with the column beside it. The rail keeps its tint and contents but becomes a sticky panel at the
+  top of its column. Nothing else changes — palette, typefaces and content stay as in 002.
+
+  Joseph's words that prompted this: "I think the main body of the site doesn't need to sit all the
+  way on one side like it does in 002, but I do like having some sidebar navigation over just
+  vertical sections like in 001."
+status: active
+created: 2026-10-01
+notes: |
+  Fork round 1, 002 line, layout. Compare against 002 for the layout change alone.
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff; --rail: #f4f3f0; --ink: #1b1b1a; --muted: #75726b; --accent: #b4441f; --rule: #e4e1da;
+    --sans: "IBM Plex Sans", system-ui, sans-serif; --serif: "Newsreader", Georgia, serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #141413; --rail: #1c1b1a; --ink: #ebe8e2; --muted: #9b968d; --accent: #e8805c; --rule: #2c2a27; }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color: var(--ink); }
+  body { margin: 0 auto; max-width: 60rem; padding: 0 28px; display: grid; grid-template-columns: 15rem 1fr; column-gap: 3.5rem; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  aside {
+    background: var(--rail); border: 1px solid var(--rule); padding: 2rem 1.75rem; margin-top: 4.5rem; align-self: start;
+    font: .9rem/1.5 var(--sans); position: sticky; top: 2rem;
+  }
+  .avatar {
+    width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--bg);
+    display: grid; place-items: center; font: 600 1.25rem var(--serif); margin-bottom: 1.2rem;
+  }
+  aside h1 { font: 600 1.15rem/1.3 var(--sans); margin: 0; }
+  aside .desc { color: var(--muted); margin: .25rem 0 2rem; }
+  aside nav a, aside .elsewhere a { display: block; color: var(--ink); text-decoration: none; padding: .2rem 0; }
+  aside nav a[aria-current] { color: var(--accent); font-weight: 500; }
+  aside nav a:hover, aside .elsewhere a:hover { color: var(--accent); }
+  aside .label { text-transform: uppercase; letter-spacing: .08em; font-size: .7rem; color: var(--muted); margin: 2rem 0 .5rem; }
+  aside .elsewhere a { color: var(--muted); }
+  main { padding: 4.5rem 0; max-width: 40rem; font: 1.2rem/1.6 var(--serif); }
+  main > p { margin: 0 0 1em; }
+  main a { color: var(--accent); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+  .section-label { font: 500 .75rem/1 var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 3rem 0 1.25rem; padding-bottom: .6rem; border-bottom: 1px solid var(--rule); }
+  article { margin: 0 0 1.75rem; }
+  article h2 { font: 600 1.3rem/1.3 var(--serif); margin: 0; }
+  article h2 a { color: var(--ink); text-decoration: none; }
+  article h2 a:hover { color: var(--accent); }
+  article time { font: .8rem var(--sans); color: var(--muted); }
+  article p { margin: .3rem 0 0; color: var(--muted); font-size: 1.05rem; }
+  @media (max-width: 760px) {
+    body { grid-template-columns: 1fr; padding: 0; }
+    aside { position: static; margin: 0; border-width: 0 0 1px; padding: 2rem 20px; }
+    aside nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+    aside .elsewhere { display: flex; gap: 1rem; flex-wrap: wrap; }
+    main { padding: 2.5rem 20px; }
+  }
+</style>
+</head>
+<body>
+  <aside>
+    <div class="avatar" aria-hidden="true">JK</div>
+    <h1>Joseph Kotzker</h1>
+    <p class="desc">Software engineer. Podcaster.</p>
+    <nav aria-label="Sections">
+      <a href="#" aria-current="page">Home</a>
+      <a href="#">Writing</a>
+      <a href="#">Projects</a>
+      <a href="#">Podcast</a>
+      <a href="#">Résumé</a>
+    </nav>
+    <p class="label">Elsewhere</p>
+    <div class="elsewhere">
+      <a href="https://github.com/jkotzker">GitHub</a>
+      <a href="https://hachyderm.io/@kotzker">Mastodon</a>
+      <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org">Bluesky</a>
+      <a href="https://trakt.tv/users/jkotzker">Trakt</a>
+      <a href="https://www.linkedin.com/in/josephkotzker/">LinkedIn</a>
+    </div>
+  </aside>
+  <main>
+    <p>I'm a software engineer. With Zach Kotzker I co-host <a href="https://www.inreversecast.com">In Reverse</a>, a podcast about watching the Fast &amp; Furious films for the first time, in reverse order.</p>
+    <p>This is where I write things down and keep track of what I've made.</p>
+
+    <h2 class="section-label">Latest writing</h2>
+    <article>
+      <time>Sample date</time>
+      <h2><a href="#">Sample post title, for layout</a></h2>
+      <p>One sentence describing the post, as written in its front matter.</p>
+    </article>
+    <article>
+      <time>Sample date</time>
+      <h2><a href="#">A second sample post, somewhat longer in title</a></h2>
+      <p>One sentence describing the post, as written in its front matter.</p>
+    </article>
+    <article>
+      <time>Sample date</time>
+      <h2><a href="#">Third sample</a></h2>
+      <p>One sentence describing the post.</p>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!-- design-direction
+id: 005
+kind: explore
+parent:
+title: Manuscript — a typed letter on paper, with handwritten marginalia
+prompt: |
+  Concept: "the writer's page" — a site that reads like a well-set document by one person.
+
+  Variant 5 of 6, unguided: go wild, ignore the reference board. Change the era and the medium — the
+  home page as a typed letter. A single sheet of paper on a desk-coloured background, set in a
+  typewriter face, with a letterhead, a salutation ("To whoever finds this,"), the bio as the body
+  of the letter, a handwritten signature, and handwritten marginalia in the margins pointing at the
+  links ("the podcast!", "code lives here"). Lists of writing and projects as a typed "P.S." and
+  "Enclosures". Slight paper texture via CSS only, a faint coffee ring, no images. Real facts where
+  known; visibly sample entries elsewhere.
+status: active
+created: 2026-10-01
+notes: |
+  Unguided ("go wild"). Spectrum position 5 of 6. Personal and warm at the cost of being a costume.
+  The likely survivors, if any: the salutation-and-signature framing, or handwritten annotation as
+  an accent on an otherwise plain page.
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Reenie+Beanie&display=swap" rel="stylesheet">
+<style>
+  :root { --desk: #5b4a3a; --paper: #fbf8ef; --ink: #22201c; --pencil: #2a4d8f; }
+  html { background: var(--desk) radial-gradient(ellipse at 30% 20%, #6d5946, var(--desk) 70%); min-height: 100%; }
+  body { margin: 0; padding: 5vh 16px 8vh; }
+  .sheet {
+    position: relative; margin: 0 auto; max-width: 40rem; background: var(--paper); color: var(--ink);
+    padding: 4.5rem 4.5rem 4rem; font: 1rem/1.75 "Courier Prime", "Courier New", monospace;
+    box-shadow: 0 18px 40px rgba(0,0,0,.35), 0 2px 4px rgba(0,0,0,.2); transform: rotate(-.6deg);
+    background-image:
+      radial-gradient(circle at 82% 88%, transparent 46px, rgba(139,94,52,.13) 48px, rgba(139,94,52,.06) 54px, transparent 57px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,.012) 0 1px, transparent 1px 3px);
+  }
+  .letterhead { text-align: center; border-bottom: 1px solid var(--ink); padding-bottom: 1rem; margin-bottom: 2rem; }
+  .letterhead b { display: block; font-size: 1.2rem; letter-spacing: .35em; text-transform: uppercase; }
+  .letterhead span { font-size: .85rem; }
+  p { margin: 0 0 1.2em; }
+  a { color: var(--ink); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: .2em; }
+  a:hover { color: var(--pencil); text-decoration-style: solid; }
+  .note {
+    position: absolute; font: 400 1.55rem/1 "Reenie Beanie", cursive; color: var(--pencil); white-space: nowrap;
+  }
+  .note::before { content: "↙"; margin-right: .2rem; }
+  .n1 { left: -9.5rem; top: 12.2rem; transform: rotate(-8deg); }
+  .n2 { right: -8.5rem; top: 17.5rem; transform: rotate(6deg); }
+  .n2::before { content: ""; } .n2::after { content: " ↘"; }
+  .signature { font: 400 2.6rem/1 "Reenie Beanie", cursive; color: var(--pencil); margin: .2rem 0 1.6rem; transform: rotate(-3deg); display: inline-block; }
+  h2 { font-size: 1rem; font-weight: 700; margin: 1.8rem 0 .4rem; }
+  ul { margin: 0; padding-left: 1.5rem; }
+  li { margin: 0; }
+  @media (max-width: 960px) { .note { position: static; display: block; margin: -.6rem 0 1rem; transform: none; } .note::before, .n2::after { content: ""; } }
+  @media (max-width: 560px) { .sheet { padding: 2.5rem 1.5rem; transform: none; } }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <div class="letterhead"><b>Joseph Kotzker</b><span>josephkotzker.com</span></div>
+
+    <p>To whoever finds this,</p>
+    <p>I'm a software engineer. With Zach Kotzker I co-host <a href="https://www.inreversecast.com">In Reverse</a>, a podcast about watching the Fast &amp; Furious films for the first time, newest first.</p>
+    <span class="note n1">the podcast!</span>
+    <p>The code I write in public lives on <a href="https://github.com/jkotzker">GitHub</a>. You can also find me on <a href="https://hachyderm.io/@kotzker">Mastodon</a> and <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org">Bluesky</a>, logging films on <a href="https://trakt.tv/users/jkotzker">Trakt</a>, and, formally, on <a href="https://www.linkedin.com/in/josephkotzker/">LinkedIn</a>.</p>
+    <span class="note n2">code lives here</span>
+    <p>Yours,</p>
+    <span class="signature">Joseph</span>
+
+    <h2>P.S. — lately I've written:</h2>
+    <ul>
+      <li><a href="#">Sample post title, for layout</a> (sample date)</li>
+      <li><a href="#">A second sample post</a> (sample date)</li>
+    </ul>
+
+    <h2>Enclosures:</h2>
+    <ul>
+      <li><a href="#">Résumé</a></li>
+      <li><a href="#">Sample project</a> — one line on what it does</li>
+      <li><a href="#">Another sample project</a> — one line on what it does</li>
+    </ul>
+  </main>
+</body>
+</html>

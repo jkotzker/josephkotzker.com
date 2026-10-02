@@ -1,0 +1,117 @@
+<!-- design-direction
+id: 009
+kind: fork
+parent: forks/008-palette-001.html
+title: 008 with 001's system serif for reading
+prompt: |
+  Copy forks/008. Change only the reading typeface: replace Newsreader with 001's system serif stack
+  (ui-serif, "Iowan Old Style", "Charter", Georgia, serif) everywhere the serif is used, and stop
+  loading Newsreader. The rail and metadata keep IBM Plex Sans. Nothing else changes.
+
+  Joseph's words: "I do like the simpler typefaces of 001 and 002."
+status: active
+created: 2026-10-01
+notes: |
+  Fork round 1, 002 line, typography option A (sibling of 010). Serif reading face from 001, sans
+  rail from 002. On a Mac the system serif resolves to New York.
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdfcfa; --rail: #f5f3ee; --ink: #1d1c1a; --muted: #6f6b64; --accent: #1f4fa3; --rule: #e6e2da;
+    --sans: "IBM Plex Sans", system-ui, sans-serif; --serif: ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #171614; --rail: #1d1c19; --ink: #e9e6e0; --muted: #9a958c; --accent: #8fb3f0; --rule: #2e2c28; }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color: var(--ink); }
+  body { margin: 0 auto; max-width: 60rem; padding: 0 28px; display: grid; grid-template-columns: 15rem 1fr; column-gap: 3.5rem; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  aside {
+    background: var(--rail); border: 1px solid var(--rule); padding: 2rem 1.75rem; margin-top: 4.5rem; align-self: start;
+    font: .9rem/1.5 var(--sans); position: sticky; top: 2rem;
+  }
+  .avatar {
+    width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--bg);
+    display: grid; place-items: center; font: 600 1.25rem var(--serif); margin-bottom: 1.2rem;
+  }
+  aside h1 { font: 600 1.15rem/1.3 var(--sans); margin: 0; }
+  aside .desc { color: var(--muted); margin: .25rem 0 2rem; }
+  aside nav a, aside .elsewhere a { display: block; color: var(--ink); text-decoration: none; padding: .2rem 0; }
+  aside nav a[aria-current] { color: var(--accent); font-weight: 500; }
+  aside nav a:hover, aside .elsewhere a:hover { color: var(--accent); }
+  aside .label { text-transform: uppercase; letter-spacing: .08em; font-size: .7rem; color: var(--muted); margin: 2rem 0 .5rem; }
+  aside .elsewhere a { color: var(--muted); }
+  main { padding: 4.5rem 0; max-width: 40rem; font: 1.2rem/1.6 var(--serif); }
+  main > p { margin: 0 0 1em; }
+  main a { color: var(--accent); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+  .section-label { font: 500 .75rem/1 var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 3rem 0 1.25rem; padding-bottom: .6rem; border-bottom: 1px solid var(--rule); }
+  article { margin: 0 0 1.75rem; }
+  article h2 { font: 600 1.3rem/1.3 var(--serif); margin: 0; }
+  article h2 a { color: var(--ink); text-decoration: none; }
+  article h2 a:hover { color: var(--accent); }
+  article time { font: .8rem var(--sans); color: var(--muted); }
+  article p { margin: .3rem 0 0; color: var(--muted); font-size: 1.05rem; }
+  @media (max-width: 760px) {
+    body { grid-template-columns: 1fr; padding: 0; }
+    aside { position: static; margin: 0; border-width: 0 0 1px; padding: 2rem 20px; }
+    aside nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+    aside .elsewhere { display: flex; gap: 1rem; flex-wrap: wrap; }
+    main { padding: 2.5rem 20px; }
+  }
+</style>
+</head>
+<body>
+  <aside>
+    <div class="avatar" aria-hidden="true">JK</div>
+    <h1>Joseph Kotzker</h1>
+    <p class="desc">Software engineer. Podcaster.</p>
+    <nav aria-label="Sections">
+      <a href="#" aria-current="page">Home</a>
+      <a href="#">Writing</a>
+      <a href="#">Projects</a>
+      <a href="#">Podcast</a>
+      <a href="#">Résumé</a>
+    </nav>
+    <p class="label">Elsewhere</p>
+    <div class="elsewhere">
+      <a href="https://github.com/jkotzker">GitHub</a>
+      <a href="https://hachyderm.io/@kotzker">Mastodon</a>
+      <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org">Bluesky</a>
+      <a href="https://trakt.tv/users/jkotzker">Trakt</a>
+      <a href="https://www.linkedin.com/in/josephkotzker/">LinkedIn</a>
+    </div>
+  </aside>
+  <main>
+    <p>I'm a software engineer. With Zach Kotzker I co-host <a href="https://www.inreversecast.com">In Reverse</a>, a podcast about watching the Fast &amp; Furious films for the first time, in reverse order.</p>
+    <p>This is where I write things down and keep track of what I've made.</p>
+
+    <h2 class="section-label">Latest writing</h2>
+    <article>
+      <time>Sample date</time>
+      <h2><a href="#">Sample post title, for layout</a></h2>
+      <p>One sentence describing the post, as written in its front matter.</p>
+    </article>
+    <article>
+      <time>Sample date</time>
+      <h2><a href="#">A second sample post, somewhat longer in title</a></h2>
+      <p>One sentence describing the post, as written in its front matter.</p>
+    </article>
+    <article>
+      <time>Sample date</time>
+      <h2><a href="#">Third sample</a></h2>
+      <p>One sentence describing the post.</p>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!-- design-direction
+id: 003
+kind: explore
+parent:
+title: Editorial — display serif name, small caps, hierarchy does the work
+prompt: |
+  Concept: "the writer's page" — a site that reads like a well-set document by one person, where
+  typography, measure and restraint are the identity. Tone references (Joseph's words for the whole
+  list): "simple, clean, evident taste" — sindresorhus.com, rambo.codes, marco.org, hypercritical.co,
+  daringfireball.net, danielwirtz.com, brianlovin.com, stefanzweifel.dev, paulstamatiou.com,
+  christianselig.com.
+
+  Variant 3 of 6, guided, toward the expressive end of restraint. Home page hero only. Set the name
+  very large in a high-contrast display serif, with a short italic descriptor beneath. A thin rule.
+  The bio as a lede paragraph with a drop cap. Sections as a three-column index — Writing, Podcast,
+  Projects — each headed in letter-spaced small caps, entries in the body serif. Elsewhere links as
+  a single line of small caps separated by middots. Warm paper background, near-black ink, one
+  accent colour used only for links and the drop cap. No images. Light and dark via
+  prefers-color-scheme. Real facts where known; visibly sample entries elsewhere.
+status: active
+created: 2026-10-01
+notes: |
+  Guided. Spectrum position 3 of 6. The most "designed" of the guided half: tests whether a
+  confident typographic hierarchy reads as evident taste or as a magazine costume.
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e7; --ink: #191714; --muted: #6d665a; --accent: #8a2c1d; --rule: #d9d0bf;
+    --display: "Instrument Serif", Georgia, serif; --body: "Source Serif 4", Georgia, serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16140f; --ink: #eee7d8; --muted: #a0978a; --accent: #e2876f; --rule: #322d24; }
+  }
+  html { background: var(--bg); color: var(--ink); }
+  body { margin: 0 auto; max-width: 62rem; padding: 10vh 28px 8vh; font: 1.125rem/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+  header h1 { font: 400 clamp(3.5rem, 11vw, 8rem)/.92 var(--display); letter-spacing: -.02em; margin: 0; }
+  header .desc { font: italic 400 clamp(1.25rem, 2.6vw, 1.75rem)/1.3 var(--display); color: var(--muted); margin: .6rem 0 0; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+  .lede { max-width: 36rem; font-size: 1.3rem; line-height: 1.55; margin: 0; }
+  .lede::first-letter { float: left; font: 400 4.6rem/.8 var(--display); color: var(--accent); margin: .35rem .5rem 0 0; }
+  a { color: var(--accent); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+  .elsewhere { font-variant: all-small-caps; letter-spacing: .08em; font-size: 1.05rem; margin: 1.8rem 0 0; color: var(--muted); }
+  .elsewhere a { color: var(--ink); text-decoration: none; }
+  .elsewhere a:hover { color: var(--accent); }
+  .index { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+  .index h2 { font: 600 .95rem/1 var(--body); font-variant: all-small-caps; letter-spacing: .14em; color: var(--muted); margin: 0 0 1rem; }
+  .index ul { list-style: none; padding: 0; margin: 0; }
+  .index li { margin: 0 0 1rem; line-height: 1.35; }
+  .index li a { color: var(--ink); text-decoration: none; }
+  .index li a:hover { color: var(--accent); }
+  .index small { display: block; color: var(--muted); font-size: .85rem; margin-top: .15rem; font-style: italic; }
+  footer { margin-top: 4rem; color: var(--muted); font-size: .85rem; font-variant: all-small-caps; letter-spacing: .1em; }
+  @media (max-width: 720px) { .index { grid-template-columns: 1fr; gap: 2rem; } }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Joseph Kotzker</h1>
+    <p class="desc">software engineer &amp; podcaster</p>
+  </header>
+  <hr>
+  <p class="lede">I'm a software engineer. With Zach Kotzker I co-host <a href="https://www.inreversecast.com">In Reverse</a>, a podcast about watching the Fast &amp; Furious films for the first time — newest first.</p>
+  <p class="elsewhere">
+    <a href="https://github.com/jkotzker">GitHub</a> · <a href="https://hachyderm.io/@kotzker">Mastodon</a> · <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org">Bluesky</a> · <a href="https://trakt.tv/users/jkotzker">Trakt</a> · <a href="https://www.instagram.com/josephkotzker/">Instagram</a> · <a href="https://www.linkedin.com/in/josephkotzker/">LinkedIn</a> · <a href="#">Résumé</a>
+  </p>
+  <hr>
+  <section class="index">
+    <div>
+      <h2>Writing</h2>
+      <ul>
+        <li><a href="#">Sample post title, for layout</a><small>Sample date</small></li>
+        <li><a href="#">A second sample post, somewhat longer in title</a><small>Sample date</small></li>
+        <li><a href="#">Third sample</a><small>Sample date</small></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Podcast</h2>
+      <ul>
+        <li><a href="https://www.inreversecast.com">In Reverse</a><small>co-host · the Fast &amp; Furious films, backwards</small></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Projects</h2>
+      <ul>
+        <li><a href="#">Sample project</a><small>one line on what it does</small></li>
+        <li><a href="#">Another sample project</a><small>one line on what it does</small></li>
+      </ul>
+    </div>
+  </section>
+  <footer>josephkotzker.com · <a href="#">rss</a></footer>
+</body>
+</html>

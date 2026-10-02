@@ -1,0 +1,83 @@
+<!-- design-direction
+id: 001
+kind: explore
+parent:
+title: Bare text — one column, system serif, links in prose
+prompt: |
+  Concept: "the writer's page" — a site that reads like a well-set document by one person, where
+  typography, measure and restraint are the identity. Tone references (Joseph's words for the whole
+  list): "simple, clean, evident taste" — sindresorhus.com, rambo.codes, marco.org, hypercritical.co,
+  daringfireball.net, danielwirtz.com, brianlovin.com, stefanzweifel.dev, paulstamatiou.com,
+  christianselig.com.
+
+  Variant 1 of 6, the minimal end of the spectrum, guided. Home page hero only. One centred column
+  at a comfortable reading measure, the system serif stack, no image, no nav bar. The bio is a short
+  paragraph with links set inline in the prose rather than as buttons or icons. Below it, three
+  plain lists — writing, podcast, projects — and a one-line footer. Light and dark via
+  prefers-color-scheme. Real facts where known (name, In Reverse, the Linktree links); visibly
+  sample entries elsewhere.
+status: active
+created: 2026-10-01
+notes: |
+  Guided. Spectrum position 1 of 6 (most minimal). Tests whether pure restraint reads as taste or as
+  unfinished. Links are underlined text only; the only colour is the link colour.
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<style>
+  :root {
+    --bg: #fdfcfa; --ink: #1d1c1a; --muted: #6f6b64; --link: #1f4fa3; --rule: #e6e2da;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #171614; --ink: #e9e6e0; --muted: #9a958c; --link: #8fb3f0; --rule: #2e2c28; }
+  }
+  html { background: var(--bg); color: var(--ink); }
+  body {
+    margin: 0 auto; padding: 12vh 20px 8vh; max-width: 34rem;
+    font: 1.1875rem/1.6 ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 1.1875rem; font-weight: 700; margin: 0 0 1.4em; }
+  h2 { font-size: 1rem; font-weight: 700; margin: 2.6em 0 .6em; }
+  p { margin: 0 0 1em; }
+  a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+  a:hover { text-decoration-thickness: 2px; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin: 0 0 .35em; }
+  time, .meta { color: var(--muted); font-size: .9em; }
+  li time { display: inline-block; min-width: 6.5em; font-variant-numeric: tabular-nums; }
+  footer { margin-top: 4em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9em; }
+</style>
+</head>
+<body>
+  <h1>Joseph Kotzker</h1>
+  <p>I'm a software engineer. I co-host <a href="https://www.inreversecast.com">In Reverse</a> with Zach Kotzker, a podcast about watching the Fast &amp; Furious films for the first time, newest first.</p>
+  <p>Code is on <a href="https://github.com/jkotzker">GitHub</a>. I'm on <a href="https://hachyderm.io/@kotzker">Mastodon</a> and <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org">Bluesky</a>, occasionally on <a href="https://www.instagram.com/josephkotzker/">Instagram</a>, and logging films on <a href="https://trakt.tv/users/jkotzker">Trakt</a>. My <a href="#">résumé</a> is here; <a href="https://www.linkedin.com/in/josephkotzker/">LinkedIn</a> too.</p>
+
+  <h2>Writing</h2>
+  <ul>
+    <li><time>Sample date</time> <a href="#">Sample post title, for layout</a></li>
+    <li><time>Sample date</time> <a href="#">A second sample post, somewhat longer in title</a></li>
+    <li><time>Sample date</time> <a href="#">Third sample</a></li>
+  </ul>
+
+  <h2>Podcast</h2>
+  <ul>
+    <li><a href="https://www.inreversecast.com">In Reverse</a> <span class="meta">— co-host, with Zach Kotzker</span></li>
+  </ul>
+
+  <h2>Projects</h2>
+  <ul>
+    <li><a href="#">Sample project</a> <span class="meta">— one line on what it does</span></li>
+    <li><a href="#">Another sample project</a> <span class="meta">— one line on what it does</span></li>
+  </ul>
+
+  <footer><a href="#">RSS</a> · josephkotzker.com</footer>
+</body>
+</html>

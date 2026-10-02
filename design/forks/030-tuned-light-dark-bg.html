@@ -1,0 +1,144 @@
+<!-- design-direction
+id: 030
+kind: fork
+parent: forks/029-outline-icons-a11y.html
+title: 029 with Joseph's light palette and darker-warm dark background from the 029 playground
+prompt: |
+  Copy forks/029. Apply the colour values from playgrounds/029-tune.html as Joseph set them, and
+  nothing else. Changed from 029:
+  - light scheme: background #fdfcfa -> #ebebeb, text #1d1c1a -> #131211, muted #6f6b64 -> #77716d,
+    link #1f4fa3 -> #286be1, rules #e6e2da -> #cccbc4 (sidebar hover stays equal to the text
+    colour, which is what 029 already does);
+  - dark scheme: background #171614 -> #22211e.
+  Type and layout values in the block are identical to 029.
+
+  Joseph pasted the same block twice, labelled "Dark" and "Light" (the copy-out always contains
+  both schemes). Verbatim:
+    :root {
+      --bg: #ebebeb;
+      --ink: #131211;
+      --muted: #77716d;
+      --link: #286be1;
+      --rule: #cccbc4;
+      --hot: #131211;
+      --font-body: ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+      --font-side: ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+      --text-body: 1.15rem;
+      --leading: 1.65;
+      --text-h2: 1.075rem;
+      --text-side: 0.95rem;
+      --side-leading: 2;
+      --label-opacity: 1;
+      --measure: 34rem;
+      --side-gap: 2.25rem;
+      --side-w: 7.25rem;
+      --side-top: 12vh;
+      --edge-inset: 2rem;
+      --headshot: 96px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #22211e;
+        --ink: #e9e6e0;
+        --muted: #929292;
+        --link: #00c7fc;
+        --rule: #494949;
+        --hot: #e9e6e0;
+      }
+    }
+    /* sidebar position: beside the column (uses --side-gap) */
+status: active
+created: 2026-10-01
+notes: |
+  Playground output applied as one fork. Light mode moves from a warm off-white to a neutral light
+  grey page with a brighter blue link; dark mode's background lifts slightly.
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<style>
+  :root {
+    --bg: #ebebeb; --ink: #131211; --muted: #77716d; --link: #286be1; --rule: #cccbc4;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #22211e; --ink: #e9e6e0; --muted: #929292; --link: #00c7fc; --rule: #494949; }
+  }
+  html { background: var(--bg); color: var(--ink); }
+  body {
+    margin: 0 auto; padding: 12vh 20px 8vh; max-width: 34rem;
+    font: 1.15rem/1.65 ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 1.15rem; font-weight: 700; margin: 0 0 1.4em; }
+  h2 { font-size: 1.075rem; font-weight: 700; margin: 2.6em 0 .6em; }
+  p { margin: 0 0 1em; }
+  a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+  a:hover { text-decoration-thickness: 2px; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin: 0 0 .35em; }
+  time, .meta { color: var(--muted); font-size: .9em; }
+  li time { display: inline-block; min-width: 6.5em; font-variant-numeric: tabular-nums; }
+  nav.side { position: fixed; top: 12vh; left: calc(50% - 17rem - 9.5rem); width: 7.25rem; font-size: .95rem; line-height: 2; max-height: calc(100vh - 12vh - 1rem); overflow-y: auto; padding: 4px 6px 4px 4px; margin: -4px 0 0 -4px; }
+  nav.side a { display: block; color: var(--muted); text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 2px; }
+  nav.side a:hover, nav.side a[aria-current] { color: var(--ink); }
+  nav.side .label { display: block; margin-top: 1.4em; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  @media (max-width: 64rem) {
+    body { padding-top: 6vh; }
+    nav.side { position: static; width: auto; max-height: none; overflow: visible; padding: 0; display: flex; flex-wrap: wrap; gap: 0 1.1rem; margin: 0 0 2.5em; }
+    nav.side .label { flex-basis: 100%; margin-top: .6em; }
+  }
+  nav.side .navicon { width: 1em; height: 1em; vertical-align: -.14em; margin-right: .5em; }
+  nav.side .icons { display: flex; flex-wrap: wrap; gap: .75rem .85rem; margin-top: .55em; }
+  nav.side .icons a { display: inline-flex; }
+  nav.side .icons svg { width: 20px; height: 20px; }
+  .headshot { width: 96px; height: 96px; border-radius: 50%; background: var(--rule); color: var(--muted); display: grid; place-items: center; margin: 0 0 1.2em; overflow: hidden; }
+  .headshot svg { width: 44px; height: 44px; }
+  footer { margin-top: 4em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9em; }
+</style>
+</head>
+<body>
+  <nav class="side" aria-label="Sections">
+    <a href="#writing"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M13 21h8" /> <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /> </svg>Writing</a>
+    <a href="#podcast"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 19v3" /> <path d="M19 10v2a7 7 0 0 1-14 0v-2" /> <rect x="9" y="2" width="6" height="13" rx="3" /> </svg>Podcast</a>
+    <a href="#projects"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 10.5 8 13l2 2.5" /> <path d="m14 10.5 2 2.5-2 2.5" /> <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z" /> </svg>Projects</a>
+    <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /> </svg>Résumé</a>
+    <a href="#"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 11a9 9 0 0 1 9 9" /> <path d="M4 4a16 16 0 0 1 16 16" /> <circle cx="5" cy="19" r="1" /> </svg>RSS</a>
+    <span class="label">Elsewhere</span>
+    <a href="https://github.com/jkotzker"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /> </svg>GitHub</a>
+    <a href="https://hachyderm.io/@kotzker"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944" /> <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" /> </svg>Mastodon</a>
+    <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M6.335 5.144c-1.654 -1.199 -4.335 -2.127 -4.335 .826c0 .59 .35 4.953 .556 5.661c.713 2.463 3.13 2.75 5.444 2.369c-4.045 .665 -4.889 3.208 -2.667 5.41c1.03 1.018 1.913 1.59 2.667 1.59c2 0 3.134 -2.769 3.5 -3.5c.333 -.667 .5 -1.167 .5 -1.5c0 .333 .167 .833 .5 1.5c.366 .731 1.5 3.5 3.5 3.5c.754 0 1.637 -.571 2.667 -1.59c2.222 -2.203 1.378 -4.746 -2.667 -5.41c2.314 .38 4.73 .094 5.444 -2.369c.206 -.708 .556 -5.072 .556 -5.661c0 -2.953 -2.68 -2.025 -4.335 -.826c-2.293 1.662 -4.76 5.048 -5.665 6.856c-.905 -1.808 -3.372 -5.194 -5.665 -6.856" /> </svg>Bluesky</a>
+    <a href="https://www.instagram.com/josephkotzker/"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4l0 -8" /> <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /> <path d="M16.5 7.5v.01" /> </svg>Instagram</a>
+    <a href="https://trakt.tv/users/jkotzker"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" /> <path d="M8 4l0 16" /> <path d="M16 4l0 16" /> <path d="M4 8l4 0" /> <path d="M4 16l4 0" /> <path d="M4 12l16 0" /> <path d="M16 8l4 0" /> <path d="M16 16l4 0" /> </svg>Trakt</a>
+    <a href="https://www.linkedin.com/in/josephkotzker/"><svg class="navicon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M8 11v5" /> <path d="M8 8v.01" /> <path d="M12 16v-5" /> <path d="M16 16v-3a2 2 0 1 0 -4 0" /> <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4l0 -10" /> </svg>LinkedIn</a>
+  </nav>
+  <div class="headshot" role="img" aria-label="Headshot placeholder"><svg class="icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /> </svg></div>
+  <h1>Joseph Kotzker</h1>
+  <p>I'm a software engineer. I co-host <a href="https://www.inreversecast.com">In Reverse</a> with Zach Kotzker, a podcast about watching the Fast &amp; Furious films for the first time, newest first.</p>
+
+  <h2 id="writing">Writing</h2>
+  <ul>
+    <li><time>Sample date</time> <a href="#">Sample post title, for layout</a></li>
+    <li><time>Sample date</time> <a href="#">A second sample post, somewhat longer in title</a></li>
+    <li><time>Sample date</time> <a href="#">Third sample</a></li>
+  </ul>
+
+  <h2 id="podcast">Podcast</h2>
+  <ul>
+    <li><a href="https://www.inreversecast.com">In Reverse</a> <span class="meta">— co-host, with Zach Kotzker</span></li>
+  </ul>
+
+  <h2 id="projects">Projects</h2>
+  <ul>
+    <li><a href="#">Sample project</a> <span class="meta">— one line on what it does</span></li>
+    <li><a href="#">Another sample project</a> <span class="meta">— one line on what it does</span></li>
+  </ul>
+
+  <footer><a href="#">RSS</a> · josephkotzker.com</footer>
+</body>
+</html>

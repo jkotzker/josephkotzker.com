@@ -1,0 +1,71 @@
+/* Design tokens — josephkotzker.com
+   Extracted 2026-10-01 from the adopted prototype, forks/031-light-contrast-aa.html.
+   Named by role, not by value. Everything built after convergence uses these and defines no
+   colours or fonts of its own. Change a value here only when a fork that changes it is adopted
+   (design/direction.md records which). */
+
+:root {
+  color-scheme: light dark;
+
+  /* Colour — light scheme (Joseph's tuning in playgrounds/029-tune, muted and link darkened to
+     pass WCAG AA 4.5:1 in fork 031) */
+  --color-bg: #ebebeb;          /* page background */
+  --color-text: #131211;        /* body text, headings, sidebar hover */
+  --color-text-muted: #6f6966;  /* sidebar, dates, descriptions, footer, headshot glyph */
+  --color-link: #1f63dc;        /* links and the keyboard focus ring */
+  --color-rule: #cccbc4;        /* footer rule, headshot placeholder fill */
+
+  /* Type */
+  --font-body: ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+  --text-base: 1.15rem;         /* body and the name (h1) */
+  --text-heading: 1.075rem;     /* section headings (h2) */
+  --text-nav: 0.95rem;          /* sidebar */
+  --text-label: 0.8rem;         /* sidebar group label ("Elsewhere") */
+  --text-small: 0.9em;          /* dates, descriptions, footer — relative to their context */
+  --leading-body: 1.65;
+  --leading-nav: 2;
+  --weight-bold: 700;
+  --tracking-label: 0.06em;
+
+  /* Layout */
+  --measure: 34rem;             /* reading column width */
+  --page-pad-x: 20px;
+  --page-pad-top: 12vh;
+  --page-pad-top-narrow: 6vh;   /* below the 64rem breakpoint */
+  --page-pad-bottom: 8vh;
+  --nav-width: 7.25rem;
+  --nav-gap: 2.25rem;           /* sidebar to reading column */
+  --nav-top: 12vh;
+
+  /* Space (em values scale with the element's own type size) */
+  --space-heading-before: 2.6em;  /* above section headings */
+  --space-heading-after: 0.6em;
+  --space-name-after: 1.4em;      /* below the name */
+  --space-paragraph: 1em;
+  --space-item: 0.35em;           /* between list items */
+  --space-footer: 4em;            /* above the footer rule */
+
+  /* Lines, focus, shapes, icons */
+  --border-hairline: 1px;
+  --underline: 1px;
+  --underline-hover: 2px;
+  --underline-offset: 0.18em;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+  --radius-focus: 2px;
+  --radius-round: 50%;
+  --icon-size: 1em;             /* sidebar icons sit at text size */
+  --headshot-size: 96px;
+  --headshot-glyph: 44px;       /* placeholder only; goes away with a real photo */
+}
+
+/* Colour — dark scheme (Joseph's tuning in playgrounds/023-tune and 029-tune) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #22211e;
+    --color-text: #e9e6e0;
+    --color-text-muted: #929292;
+    --color-link: #00c7fc;
+    --color-rule: #494949;
+  }
+}

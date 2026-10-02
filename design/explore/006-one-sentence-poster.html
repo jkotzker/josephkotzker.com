@@ -1,0 +1,62 @@
+<!-- design-direction
+id: 006
+kind: explore
+parent:
+title: One-sentence poster — the whole home page is a single oversized sentence
+prompt: |
+  Concept: "the writer's page" — a site that reads like a well-set document by one person.
+
+  Variant 6 of 6, unguided: go wild, ignore the reference board, break a convention on purpose. The
+  outlandish end of the spectrum. There is no navigation, no list, no section heading: the entire
+  home page is one oversized running sentence, set like a typographic poster, that contains every
+  section and every outbound link as words within it. Use a variable grotesque with a width axis;
+  linked words are set wider and heavier than the prose around them and change width on hover.
+  One flat background colour with strong contrast, no images. A tiny footer line is the only other
+  text. Real facts where known.
+status: active
+created: 2026-10-01
+notes: |
+  Unguided ("go wild"). Spectrum position 6 of 6 (most outlandish). Abandons the document form
+  entirely while keeping "the words are the design". Fails as a navigable site on purpose; the
+  questions it asks are whether the bio-as-index idea and the width-on-hover links have anything
+  worth carrying back down the spectrum.
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #ece6da; --ink: #121212; --hot: #e2401c; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111111; --ink: #ece6da; --hot: #ff6a3d; } }
+  html { background: var(--bg); color: var(--ink); }
+  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 6vh 5vw; box-sizing: border-box; }
+  p.poster {
+    margin: 0; max-width: 22ch; font-family: "Archivo", sans-serif;
+    font-size: clamp(2.2rem, 6.4vw, 6.4rem); line-height: 1.02; letter-spacing: -.02em;
+    font-weight: 330; font-stretch: 78%;
+  }
+  .poster b { font-weight: 850; font-stretch: 100%; }
+  .poster a {
+    color: inherit; text-decoration: none; font-weight: 800; font-stretch: 112%;
+    box-shadow: inset 0 -.09em 0 var(--hot); transition: font-stretch .25s ease, color .25s ease;
+  }
+  .poster a:hover, .poster a:focus-visible { font-stretch: 125%; color: var(--hot); outline: none; }
+  .poster .aside { font-stretch: 62%; font-weight: 300; color: color-mix(in srgb, var(--ink) 55%, transparent); }
+  footer { margin-top: 5vh; font: 500 .8rem/1.4 "Archivo", sans-serif; font-stretch: 100%; text-transform: uppercase; letter-spacing: .12em; }
+  footer a { color: inherit; }
+  @media (prefers-reduced-motion: reduce) { .poster a { transition: none; } }
+</style>
+</head>
+<body>
+  <p class="poster">
+    <b>Joseph Kotzker</b> is a software engineer who <a href="#">writes</a>, builds <a href="#">things</a>, co-hosts <a href="https://www.inreversecast.com">In&nbsp;Reverse</a> <span class="aside">(the Fast &amp; Furious films, watched newest first)</span>, keeps code on <a href="https://github.com/jkotzker">GitHub</a>, talks on <a href="https://hachyderm.io/@kotzker">Mastodon</a> and <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org">Bluesky</a>, logs films on <a href="https://trakt.tv/users/jkotzker">Trakt</a>, and fits on one <a href="#">résumé</a>.
+  </p>
+  <footer>josephkotzker.com · <a href="#">RSS</a> · <a href="https://www.linkedin.com/in/josephkotzker/">LinkedIn</a> · <a href="https://www.instagram.com/josephkotzker/">Instagram</a></footer>
+</body>
+</html>

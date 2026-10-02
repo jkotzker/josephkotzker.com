@@ -1,0 +1,109 @@
+<!-- design-direction
+id: 018
+kind: fork
+parent: forks/017-headshot.html
+title: 017 with brand icons in place of the "Elsewhere" text links
+prompt: |
+  Copy forks/017. Change only the "Elsewhere" links in the sidebar: replace the six text links
+  (GitHub, Mastodon, Bluesky, Instagram, Trakt, LinkedIn) with their brand icons from Simple Icons
+  16.33.0 (CC0), inlined as SVG, 20px, in the muted colour, wrapping in a small grid under the
+  "Elsewhere" label, each with an accessible name and a tooltip. Nothing else changes.
+
+  Joseph's words: "For 012, let's see what it would look like adding a headshot, and maybe some
+  iconography; it doesn't need to be pure text, maybe some social media icons instead of the text
+  there?"
+status: active
+created: 2026-10-01
+notes: |
+  Fork round 2, 012 line, imagery 2 of 3. Monochrome icons in the page's muted grey rather than
+  brand colours, so they read as part of the page rather than as badges.
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Kotzker</title>
+<style>
+  :root {
+    --bg: #fdfcfa; --ink: #1d1c1a; --muted: #6f6b64; --link: #1f4fa3; --rule: #e6e2da;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #171614; --ink: #e9e6e0; --muted: #9a958c; --link: #8fb3f0; --rule: #2e2c28; }
+  }
+  html { background: var(--bg); color: var(--ink); }
+  body {
+    margin: 0 auto; padding: 12vh 20px 8vh; max-width: 34rem;
+    font: 1.1875rem/1.6 ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 1.1875rem; font-weight: 700; margin: 0 0 1.4em; }
+  h2 { font-size: 1rem; font-weight: 700; margin: 2.6em 0 .6em; }
+  p { margin: 0 0 1em; }
+  a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+  a:hover { text-decoration-thickness: 2px; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin: 0 0 .35em; }
+  time, .meta { color: var(--muted); font-size: .9em; }
+  li time { display: inline-block; min-width: 6.5em; font-variant-numeric: tabular-nums; }
+  nav.side { position: fixed; top: 12vh; left: calc(50% - 17rem - 10rem); width: 7.5rem; font-size: .95rem; line-height: 1.9; }
+  nav.side a { display: block; color: var(--muted); text-decoration: none; }
+  nav.side a:hover, nav.side a[aria-current] { color: var(--ink); }
+  nav.side .label { display: block; margin-top: 1.4em; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); opacity: .75; }
+  @media (max-width: 64rem) {
+    body { padding-top: 6vh; }
+    nav.side { position: static; width: auto; display: flex; flex-wrap: wrap; gap: 0 1.1rem; margin: 0 0 2.5em; }
+    nav.side .label { flex-basis: 100%; margin-top: .6em; }
+  }
+  nav.side .icons { display: flex; flex-wrap: wrap; gap: .75rem .85rem; margin-top: .55em; }
+  nav.side .icons a { display: inline-flex; }
+  nav.side .icons svg { width: 20px; height: 20px; }
+  .headshot { width: 96px; height: 96px; border-radius: 50%; background: var(--rule); color: var(--muted); display: grid; place-items: center; margin: 0 0 1.2em; overflow: hidden; }
+  .headshot svg { width: 44px; height: 44px; }
+  footer { margin-top: 4em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9em; }
+</style>
+</head>
+<body>
+  <nav class="side" aria-label="Sections">
+    <a href="#writing">Writing</a>
+    <a href="#podcast">Podcast</a>
+    <a href="#projects">Projects</a>
+    <a href="#">Résumé</a>
+    <a href="#">RSS</a>
+    <span class="label">Elsewhere</span>
+    <div class="icons">
+      <a href="https://github.com/jkotzker" aria-label="GitHub" title="GitHub"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://hachyderm.io/@kotzker" aria-label="Mastodon" title="Mastodon"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z"/></svg></a>
+      <a href="https://bsky.app/profile/joseph.bluesky.kotzker.org" aria-label="Bluesky" title="Bluesky"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></svg></a>
+      <a href="https://www.instagram.com/josephkotzker/" aria-label="Instagram" title="Instagram"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a>
+      <a href="https://trakt.tv/users/jkotzker" aria-label="Trakt" title="Trakt"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="m15.082 15.107-.73-.73 9.578-9.583a4.499 4.499 0 0 0-.115-.575L13.662 14.382l1.08 1.08-.73.73-1.81-1.81L23.422 3.144c-.075-.15-.155-.3-.25-.44L11.508 14.377l2.154 2.155-.73.73-7.193-7.199.73-.73 4.309 4.31L22.546 1.86A5.618 5.618 0 0 0 18.362 0H5.635A5.637 5.637 0 0 0 0 5.634V18.37A5.632 5.632 0 0 0 5.635 24h12.732C21.477 24 24 21.48 24 18.37V6.19l-8.913 8.918zm-4.314-2.155L6.814 8.988l.73-.73 3.954 3.96zm1.075-1.084-3.954-3.96.73-.73 3.959 3.96zm9.853 5.688a4.141 4.141 0 0 1-4.14 4.14H6.438a4.144 4.144 0 0 1-4.139-4.14V6.438A4.141 4.141 0 0 1 6.44 2.3h10.387v1.04H6.438c-1.71 0-3.099 1.39-3.099 3.1V17.55c0 1.71 1.39 3.105 3.1 3.105h11.117c1.71 0 3.1-1.395 3.1-3.105v-1.754h1.04v1.754z"/></svg></a>
+      <a href="https://www.linkedin.com/in/josephkotzker/" aria-label="LinkedIn" title="LinkedIn"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    </div>
+  </nav>
+  <div class="headshot" role="img" aria-label="Headshot placeholder"><svg class="icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /> </svg></div>
+  <h1>Joseph Kotzker</h1>
+  <p>I'm a software engineer. I co-host <a href="https://www.inreversecast.com">In Reverse</a> with Zach Kotzker, a podcast about watching the Fast &amp; Furious films for the first time, newest first.</p>
+
+  <h2 id="writing">Writing</h2>
+  <ul>
+    <li><time>Sample date</time> <a href="#">Sample post title, for layout</a></li>
+    <li><time>Sample date</time> <a href="#">A second sample post, somewhat longer in title</a></li>
+    <li><time>Sample date</time> <a href="#">Third sample</a></li>
+  </ul>
+
+  <h2 id="podcast">Podcast</h2>
+  <ul>
+    <li><a href="https://www.inreversecast.com">In Reverse</a> <span class="meta">— co-host, with Zach Kotzker</span></li>
+  </ul>
+
+  <h2 id="projects">Projects</h2>
+  <ul>
+    <li><a href="#">Sample project</a> <span class="meta">— one line on what it does</span></li>
+    <li><a href="#">Another sample project</a> <span class="meta">— one line on what it does</span></li>
+  </ul>
+
+  <footer><a href="#">RSS</a> · josephkotzker.com</footer>
+</body>
+</html>
