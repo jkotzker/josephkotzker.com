@@ -1,21 +1,22 @@
 ---
 import { getCollection } from 'astro:content';
+import LinkRow from '../components/LinkRow.astro';
 import Base from '../layouts/Base.astro';
+import { inAuthoredOrder } from '../lib/curated-loader';
 
-const projects = await getCollection('projects');
+const projects = inAuthoredOrder(await getCollection('projects'));
 ---
 <Base title="Projects" description="Software projects by Joseph Kotzker.">
   <h1>Projects</h1>
   {projects.length === 0 ? (
     <p>Coming soon.</p>
   ) : (
-    <ul>
-      {projects.map(({ data }) => (
-        <li>
-          <a href={data.url}>{data.name}</a> — {data.description}
-          {data.stars !== undefined && <span>★ {data.stars}</span>}
-        </li>
-      ))}
-    </ul>
+    projects.map(({ id, data }) => (
+      <>
+        <h2 id={id}>{data.name}</h2>
+        <p>{data.description}</p>
+        <LinkRow links={data.links} />
+      </>
+    ))
   )}
 </Base>

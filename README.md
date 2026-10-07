@@ -17,7 +17,7 @@ Node.js at the version in `.nvmrc` (for example `nvm use`). Install dependencies
 
 Posts live in `src/content/posts/` as Markdown with front matter: `title`, `description`, `pubDate`, and optionally `updatedDate`, `tags`, and `draft`. Posts with `draft: true` are excluded from production builds. This repository is public, so anything committed to it is visible regardless of its draft status; keep unready drafts uncommitted or on a branch.
 
-Projects and podcasts are curated YAML in `src/data/` (`projects.yaml`, `podcasts.yaml`). At build time they are enriched from the GitHub API (repository metadata) and from podcast RSS feeds (latest episode). If a fetch fails, the page falls back to the curated fields.
+Projects and podcasts are curated YAML in `src/data/` (`projects.yaml`, `podcasts.yaml`). Each entry has a `links` list with exactly one link marked `primary: true`; the home page links the entry's name to it. At build time podcasts are enriched from their RSS feed (the six latest episodes). If a fetch fails, the page falls back to the curated fields.
 
 ## Resume
 

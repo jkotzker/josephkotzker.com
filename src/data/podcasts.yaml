@@ -1,3 +1,15 @@
-# Curated entries; filled in Part 3. Each entry needs a unique `id`.
-# See src/content.config.ts for the fields.
-[]
+# Curated entries. Each entry needs a unique `id`; see src/content.config.ts for the fields.
+# `links` must mark exactly one link `primary: true` (where the name links on the home page).
+# `feed` is fetched at build time for the latest episodes.
+- id: in-reverse
+  name: In Reverse
+  role: Co-host, with Zach Kotzker
+  description: Watching the Fast & Furious films for the first time, newest first.
+  feed: https://www.inreversecast.com/rss
+  links:
+    - { kind: website, url: 'https://www.inreversecast.com', primary: true }
+    - { kind: applepodcasts, url: 'https://podcasts.apple.com/us/podcast/in-reverse/id1693522342' }
+    - { kind: overcast, url: 'https://overcast.fm/p4328113-fQiK9d' }
+    - { kind: spotify, url: 'https://open.spotify.com/show/3GskLl4hNImBvE0wSU4A52' }
+    - { kind: youtube, url: 'https://www.youtube.com/@InReverseCast' }
+    - { kind: rss, url: 'https://www.inreversecast.com/rss' }

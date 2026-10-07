@@ -1,0 +1,71 @@
+/* Site styles, extracted verbatim from the adopted page set (design/forks/053–059).
+   Every value comes from design/tokens.css; the 64rem breakpoint stays literal (media queries cannot read custom properties). */
+html { background: var(--color-bg); color: var(--color-text); scrollbar-gutter: stable; }
+body {
+  margin: 0 auto; padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom); max-width: var(--measure);
+  font: var(--text-base)/var(--leading-body) var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+h1 { font-size: var(--text-base); font-weight: var(--weight-bold); margin: 0 0 var(--space-name-after); }
+h2 { font-size: var(--text-heading); font-weight: var(--weight-bold); margin: var(--space-heading-before) 0 var(--space-heading-after); }
+p { margin: 0 0 var(--space-paragraph); }
+a { color: var(--color-link); text-decoration-thickness: var(--underline); text-underline-offset: var(--underline-offset); }
+a:hover { text-decoration-thickness: var(--underline-hover); }
+ul { list-style: none; margin: 0; padding: 0; }
+li { margin: 0 0 var(--space-item); }
+time, .meta { color: var(--color-text-muted); font-size: var(--text-small); }
+/* Labelled lists (dates, episode numbers): one muted label column; wrapped titles hang clear of it. */
+ul.labelled li { display: grid; grid-template-columns: auto 1fr; column-gap: var(--space-label); align-items: baseline; }
+ul.labelled .label { min-width: var(--label-width, var(--label-width-date)); color: var(--color-text-muted); font-size: var(--text-small); font-variant-numeric: tabular-nums; }
+.meta time { font-size: inherit; }
+nav.side { position: fixed; top: var(--nav-top); left: calc(50% - var(--measure) / 2 - var(--nav-gap) - var(--nav-width)); width: var(--nav-width); font-size: var(--text-nav); line-height: var(--leading-nav); max-height: calc(100vh - var(--nav-top) - 1rem); overflow-y: auto; padding: 4px 6px 4px 4px; margin: -4px 0 0 -4px; }
+nav.side a { display: block; color: var(--color-text-muted); text-decoration: none; }
+a:focus-visible { outline: var(--focus-ring-width) solid var(--color-link); outline-offset: var(--focus-ring-offset); border-radius: var(--radius-focus); }
+nav.side a:hover, nav.side a[aria-current] { color: var(--color-text); }
+nav.side .label { display: block; margin-top: 1.4em; font-size: var(--text-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-text-muted); }
+@media (max-width: 64rem) {
+  body { padding-top: var(--page-pad-top-narrow); }
+  nav.side { position: static; width: auto; max-height: none; overflow: visible; padding: 0; display: flex; flex-wrap: wrap; gap: 0 1.1rem; margin: 0 0 2.5em; }
+  nav.side .label { flex-basis: 100%; margin-top: .6em; }
+}
+nav.side .navicon { width: var(--icon-size); height: var(--icon-size); vertical-align: -.14em; margin-right: .5em; }
+nav.side .icons { display: flex; flex-wrap: wrap; gap: .75rem .85rem; margin-top: .55em; }
+nav.side .icons a { display: inline-flex; }
+nav.side .icons svg { width: 20px; height: 20px; }
+.headshot { width: var(--headshot-size); height: var(--headshot-size); border-radius: var(--radius-round); background: var(--color-rule); color: var(--color-text-muted); display: grid; place-items: center; margin: 0 0 1.2em; overflow: hidden; }
+.headshot svg { width: var(--headshot-glyph); height: var(--headshot-glyph); }
+footer { margin-top: var(--space-footer); padding-top: 1em; border-top: var(--border-hairline) solid var(--color-rule); color: var(--color-text-muted); font-size: var(--text-small); }
+
+/* Long-form (post, résumé): shared verbatim by both pages. */
+.prose h3 { font-size: var(--text-heading); font-weight: var(--weight-bold); font-style: italic; margin: var(--space-subheading-before) 0 var(--space-heading-after); }
+.prose ul, .prose ol { margin: 0 0 var(--space-paragraph); padding-left: var(--indent-list); }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li::marker { color: var(--color-text-muted); }
+.prose blockquote { margin: 0 0 var(--space-paragraph); padding-left: var(--indent-quote); border-left: var(--underline-hover) solid var(--color-rule); color: var(--color-text-muted); }
+.prose :not(pre) > code { font-family: var(--font-mono); font-size: var(--text-code); }
+/* Expressive Code controls, aligned with the site (radius, focus ring, type). */
+.prose .expressive-code .copy button { border-radius: var(--radius-focus); }
+.prose .expressive-code .copy button:focus-visible { outline: var(--focus-ring-width) solid var(--color-link); outline-offset: var(--focus-ring-offset); }
+.prose .expressive-code .copy .feedback { font-family: var(--font-mono); }
+html .prose .expressive-code { --ec-codeFontFml: var(--font-mono); --ec-uiFontFml: var(--font-mono); }
+.prose .expressive-code { margin: 0 0 var(--space-paragraph); }
+.prose > figure { margin: var(--space-block) 0; }
+.prose .img { aspect-ratio: 16 / 9; background: var(--color-rule); border-radius: var(--radius-focus); }
+.prose figcaption { margin-top: .4em; color: var(--color-text-muted); font-size: var(--text-small); }
+.prose sup { line-height: 0; }
+.prose sup a { text-decoration: none; }
+.prose .footnotes { margin-top: var(--space-footnotes); padding-top: 1em; border-top: var(--border-hairline) solid var(--color-rule); font-size: var(--text-small); color: var(--color-text-muted); }
+.byline { margin: calc(-1 * var(--space-name-after) + .2em) 0 var(--space-name-after); }
+/* Not in the prototypes, which used an image placeholder: keep real images inside the column. */
+.prose img { max-width: 100%; height: auto; }
+
+/* Link row: the sidebar nav's style (muted, nav size, 1em outline icon + label, hover to text colour). */
+.links { display: flex; flex-wrap: wrap; gap: 0 1.1rem; font-size: var(--text-nav); line-height: var(--leading-nav); margin: 0 0 var(--space-paragraph); }
+.links a { color: var(--color-text-muted); text-decoration: none; }
+.links a:hover { color: var(--color-text); }
+.links .navicon { width: var(--icon-size); height: var(--icon-size); vertical-align: -.14em; margin-right: .5em; }
+.episodes { margin: 0 0 var(--space-paragraph); --label-width: var(--label-width-episode); }
+
+/* Markdown footnotes carry a heading for screen readers only (the prototype shows none). */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }

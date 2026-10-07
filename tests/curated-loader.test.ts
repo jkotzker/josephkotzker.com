@@ -2,7 +2,7 @@ import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { curatedLoader } from '../src/lib/curated-loader';
+import { curatedLoader, inAuthoredOrder } from '../src/lib/curated-loader';
 
 function yamlFile(content: string): string {
   const dir = mkdtempSync(join(tmpdir(), 'curated-'));
@@ -46,8 +46,8 @@ describe('curatedLoader', () => {
       enrich: async (e) => (e.repo ? { ok: true, value: { stars: 5 } } : null),
     });
     await loader.load(ctx as never);
-    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha', repo: 'o/alpha', stars: 5 });
-    expect(entries.get('beta')).toEqual({ id: 'beta', name: 'Beta' });
+    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha', repo: 'o/alpha', stars: 5, order: 0 });
+    expect(entries.get('beta')).toEqual({ id: 'beta', name: 'Beta', order: 1 });
   });
 
   it('keeps curated fields and warns when enrichment fails', async () => {
@@ -57,7 +57,7 @@ describe('curatedLoader', () => {
       enrich: async (e) => (e.repo ? { ok: false, reason: 'HTTP 404' } : null),
     });
     await loader.load(ctx as never);
-    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha', repo: 'o/alpha' });
+    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha', repo: 'o/alpha', order: 0 });
     expect(warnings).toEqual(['alpha: enrichment skipped (HTTP 404)']);
   });
 
@@ -68,7 +68,7 @@ describe('curatedLoader', () => {
       enrich: async () => ({ ok: true, value: { name: 'Fetched', stars: 1 } }),
     });
     await loader.load(ctx as never);
-    expect(entries.get('a')).toEqual({ id: 'a', name: 'Curated', stars: 1 });
+    expect(entries.get('a')).toEqual({ id: 'a', name: 'Curated', stars: 1, order: 0 });
   });
 
   it('accepts an empty list', async () => {
@@ -105,7 +105,7 @@ describe('curatedLoader', () => {
       enrich: async () => ({ ok: true, value: { stars: 'bad' } }),
     });
     await loader.load(ctx as never);
-    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha' });
+    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha', order: 0 });
     expect(warnings).toHaveLength(1);
     expect(warnings[0]).toMatch(/^alpha: enrichment discarded/);
   });
@@ -130,7 +130,14 @@ describe('curatedLoader', () => {
       },
     });
     await loader.load(ctx as never);
-    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha' });
+    expect(entries.get('alpha')).toEqual({ id: 'alpha', name: 'Alpha', order: 0 });
     expect(warnings).toEqual(['alpha: enrichment skipped (boom)']);
+  });
+
+  it('records each entry position in the file, and inAuthoredOrder sorts by it', async () => {
+    const { entries, ctx } = fakeContext();
+    await curatedLoader({ file: yamlFile('- id: zeta\n- id: alpha\n- id: mu\n') }).load(ctx as never);
+    const loaded = [...entries].map(([id, data]) => ({ id, data: data as { order: number } }));
+    expect(inAuthoredOrder([...loaded].reverse()).map((e) => e.id)).toEqual(['zeta', 'alpha', 'mu']);
   });
 });

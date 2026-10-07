@@ -17,8 +17,8 @@
   --color-rule: #cccbc4;        /* footer rule, headshot placeholder fill */
 
   /* Type */
-  --font-body: "Source Serif 4", ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
-  --font-mono: "Source Code Pro", ui-monospace, "SF Mono", Menlo, Consolas, monospace;  /* inline and block code */
+  --font-body: var(--font-source-serif, "Source Serif 4"), ui-serif, "Iowan Old Style", "Charter", Georgia, serif;
+  --font-mono: var(--font-source-code, "Source Code Pro"), ui-monospace, "SF Mono", Menlo, Consolas, monospace;  /* inline and block code */
   --text-base: 1.15rem;         /* body and the name (h1) */
   --text-heading: 1.075rem;     /* section headings (h2) */
   --text-nav: 0.95rem;          /* sidebar */

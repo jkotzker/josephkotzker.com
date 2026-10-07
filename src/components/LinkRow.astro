@@ -1,0 +1,13 @@
+---
+// A row of links in the sidebar nav's style (design/forks/058, 059).
+import Icon from './Icon.astro';
+import { LINK_KINDS, type Link } from '../lib/links';
+
+interface Props {
+  links: Link[];
+}
+const { links } = Astro.props;
+---
+<p class="links">
+  {links.map((l) => <a href={l.url}><Icon name={LINK_KINDS[l.kind].icon} />{LINK_KINDS[l.kind].label}</a>)}
+</p>

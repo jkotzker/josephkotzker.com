@@ -1,3 +1,5 @@
-# Curated entries; filled in Part 3. Each entry needs a unique `id`.
-# See src/content.config.ts for the fields.
+# Curated entries; filled in Part 3. Each entry needs a unique `id`; see src/content.config.ts for the fields.
+# `summary` is one line for the home page; `description` is two or three sentences for /projects.
+# `links` (source, homebrew, website, appstore, download) must mark exactly one `primary: true`,
+# which is where the name links on the home page.
 []

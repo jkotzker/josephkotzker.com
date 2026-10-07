@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { isoDate } from '../../lib/dates';
 import { visiblePosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
@@ -12,9 +13,9 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <Base title={post.data.title} description={post.data.description}>
-  <article>
+  <article class="prose">
     <h1>{post.data.title}</h1>
-    <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toISOString().slice(0, 10)}</time>
+    <p class="meta byline"><time datetime={isoDate(post.data.pubDate)}>{isoDate(post.data.pubDate)}</time></p>
     <Content />
   </article>
 </Base>

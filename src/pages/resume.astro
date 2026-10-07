@@ -5,6 +5,9 @@ import Base from '../layouts/Base.astro';
 const entry = await getEntry('resume', 'resume');
 const Content = entry?.data.public === true ? (await render(entry)).Content : null;
 ---
-<Base title="Resume" description="Resume of Joseph Kotzker." noindex={!Content}>
-  {Content ? <Content /> : <p>Resume coming soon.</p>}
+<Base title="Résumé" description="Résumé of Joseph Kotzker." noindex={!Content}>
+  <article class="prose">
+    <h1>Résumé</h1>
+    {Content ? <Content /> : <p>Coming soon.</p>}
+  </article>
 </Base>
