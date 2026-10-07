@@ -2,8 +2,8 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { curatedLoader } from './lib/curated-loader';
-import { fetchLatestEpisode } from './lib/enrich/feed';
-import { fetchRepoMeta } from './lib/enrich/github';
+import { fetchEpisodes } from './lib/enrich/feed';
+import { linkList } from './lib/links';
 
 const posts = defineCollection({
   loader: glob({ base: './src/content/posts', pattern: '**/[^_]*.md' }),
@@ -18,18 +18,13 @@ const posts = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: curatedLoader({
-    file: 'src/data/projects.yaml',
-    enrich: async (entry) =>
-      typeof entry.repo === 'string' ? fetchRepoMeta(entry.repo, { token: process.env.GITHUB_TOKEN }) : null,
-  }),
+  loader: curatedLoader({ file: 'src/data/projects.yaml' }),
   schema: z.object({
+    order: z.number().int(),
     name: z.string(),
-    url: z.url(),
-    description: z.string(),
-    repo: z.string().regex(/^[\w.-]+\/[\w.-]+$/, 'repo must be owner/name').optional(),
-    stars: z.number().int().optional(),
-    pushedAt: z.coerce.date().optional(),
+    summary: z.string(), // one line, on the home page
+    description: z.string(), // two or three sentences, on /projects
+    links: linkList,
   }),
 });
 
@@ -38,18 +33,27 @@ const podcasts = defineCollection({
     file: 'src/data/podcasts.yaml',
     enrich: async (entry) => {
       if (typeof entry.feed !== 'string') return null;
-      const latest = await fetchLatestEpisode(entry.feed);
-      return latest.ok ? { ok: true, value: { latestEpisode: latest.value } } : latest;
+      const episodes = await fetchEpisodes(entry.feed);
+      return episodes.ok ? { ok: true, value: { episodes: episodes.value } } : episodes;
     },
   }),
   schema: z.object({
+    order: z.number().int(),
     name: z.string(),
-    url: z.url(),
     role: z.string(),
     description: z.string(),
+    links: linkList,
     feed: z.url().optional(),
-    latestEpisode: z
-      .object({ title: z.string(), url: z.url(), pubDate: z.coerce.date() })
+    episodes: z
+      .array(
+        z.object({
+          title: z.string(),
+          url: z.url(),
+          pubDate: z.coerce.date(),
+          season: z.number().int().optional(),
+          episode: z.number().int().optional(),
+        }),
+      )
       .optional(),
   }),
 });

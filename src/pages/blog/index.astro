@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { isoDate } from '../../lib/dates';
 import { visiblePosts } from '../../lib/posts';
 
 const posts = visiblePosts(await getCollection('posts'), { includeDrafts: import.meta.env.DEV });
@@ -10,12 +11,11 @@ const posts = visiblePosts(await getCollection('posts'), { includeDrafts: import
   {posts.length === 0 ? (
     <p>No posts yet.</p>
   ) : (
-    <ul>
+    <ul class="labelled">
       {posts.map((post) => (
         <li>
-          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-          <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toISOString().slice(0, 10)}</time>
-          {post.data.draft && <strong>(draft)</strong>}
+          <time class="label" datetime={isoDate(post.data.pubDate)}>{isoDate(post.data.pubDate)}</time>
+          <a href={`/blog/${post.id}/`}>{post.data.title}{post.data.draft && ' (draft)'}</a>
         </li>
       ))}
     </ul>

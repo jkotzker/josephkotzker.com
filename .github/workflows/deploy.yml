@@ -40,8 +40,6 @@ jobs:
 
       - name: Check, test, build, verify
         run: npm run ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-pages-artifact@v5
         with:

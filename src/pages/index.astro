@@ -1,7 +1,54 @@
 ---
+import { getCollection } from 'astro:content';
+import Icon from '../components/Icon.astro';
 import Base from '../layouts/Base.astro';
+import { inAuthoredOrder } from '../lib/curated-loader';
+import { isoDate } from '../lib/dates';
+import { primaryLink } from '../lib/links';
+import { visiblePosts } from '../lib/posts';
+
+const HOME_POSTS = 5;
+const posts = visiblePosts(await getCollection('posts'), { includeDrafts: import.meta.env.DEV }).slice(0, HOME_POSTS);
+const podcasts = inAuthoredOrder(await getCollection('podcasts'));
+const projects = inAuthoredOrder(await getCollection('projects'));
+// "Co-host, with …" reads as a clause after the dash on this page.
+const asClause = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 ---
 <Base title="Joseph Kotzker" description="Joseph Kotzker — software engineer.">
+  <div class="headshot" role="img" aria-label="Headshot placeholder"><Icon name="user" class="icon" /></div>
   <h1>Joseph Kotzker</h1>
-  <p>Site under construction.</p>
+  <p>I'm a software engineer. I co-host <a href="https://www.inreversecast.com">In Reverse</a> with Zach Kotzker, a podcast about watching the Fast &amp; Furious films for the first time, newest first.</p>
+
+  {posts.length > 0 && (
+    <>
+      <h2 id="blog">Blog</h2>
+      <ul class="labelled">
+        {posts.map((post) => (
+          <li><time class="label" datetime={isoDate(post.data.pubDate)}>{isoDate(post.data.pubDate)}</time> <a href={`/blog/${post.id}/`}>{post.data.title}</a></li>
+        ))}
+      </ul>
+    </>
+  )}
+
+  {podcasts.length > 0 && (
+    <>
+      <h2 id="podcasts">Podcasts</h2>
+      <ul>
+        {podcasts.map(({ data }) => (
+          <li><a href={primaryLink(data.links).url}>{data.name}</a> <span class="meta">— {asClause(data.role)}</span></li>
+        ))}
+      </ul>
+    </>
+  )}
+
+  {projects.length > 0 && (
+    <>
+      <h2 id="projects">Projects</h2>
+      <ul>
+        {projects.map(({ data }) => (
+          <li><a href={primaryLink(data.links).url}>{data.name}</a> <span class="meta">— {data.summary}</span></li>
+        ))}
+      </ul>
+    </>
+  )}
 </Base>

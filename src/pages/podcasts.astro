@@ -1,23 +1,31 @@
 ---
 import { getCollection } from 'astro:content';
+import LinkRow from '../components/LinkRow.astro';
 import Base from '../layouts/Base.astro';
+import { inAuthoredOrder } from '../lib/curated-loader';
 
-const podcasts = await getCollection('podcasts');
+const podcasts = inAuthoredOrder(await getCollection('podcasts'));
+const label = (e: { season?: number; episode?: number }) =>
+  e.season !== undefined && e.episode !== undefined ? `S${e.season} E${e.episode}` : '';
 ---
 <Base title="Podcasts" description="Podcasts by Joseph Kotzker.">
   <h1>Podcasts</h1>
   {podcasts.length === 0 ? (
     <p>Coming soon.</p>
   ) : (
-    <ul>
-      {podcasts.map(({ data }) => (
-        <li>
-          <a href={data.url}>{data.name}</a> ({data.role}) — {data.description}
-          {data.latestEpisode && (
-            <p>Latest: <a href={data.latestEpisode.url}>{data.latestEpisode.title}</a></p>
-          )}
-        </li>
-      ))}
-    </ul>
+    podcasts.map(({ id, data }) => (
+      <>
+        <h2 id={id}>{data.name}</h2>
+        <p class="meta">{data.role}</p>
+        <p>{data.description}</p>
+        {data.episodes && data.episodes.length > 0 && (
+          <ul class="episodes labelled">
+            {/* An unnumbered episode keeps an empty label so its title stays in the title column. */}
+            {data.episodes.map((e) => <li><span class="label">{label(e)}</span> <a href={e.url}>{e.title}</a></li>)}
+          </ul>
+        )}
+        <LinkRow links={data.links} />
+      </>
+    ))
   )}
 </Base>

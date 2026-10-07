@@ -1,12 +1,42 @@
 ---
+import { Font } from 'astro:assets';
+import Icon, { type IconName } from '../components/Icon.astro';
+import '../../design/tokens.css';
+import '../styles/site.css';
+
 interface Props {
   title: string;
   description: string;
   noindex?: boolean;
 }
 const { title, description, noindex = false } = Astro.props;
-const fullTitle = title === 'Joseph Kotzker' ? title : `${title} · Joseph Kotzker`;
+const fullTitle = title === 'Joseph Kotzker' ? title : `${title} — Joseph Kotzker`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const sections: { href: string; label: string; icon: IconName }[] = [
+  { href: '/', label: 'Home', icon: 'home' },
+  { href: '/blog/', label: 'Blog', icon: 'blog' },
+  { href: '/podcasts/', label: 'Podcasts', icon: 'podcasts' },
+  { href: '/projects/', label: 'Projects', icon: 'projects' },
+  { href: '/resume/', label: 'Résumé', icon: 'resume' },
+  { href: '/rss.xml', label: 'RSS', icon: 'rss' },
+];
+const elsewhere: { href: string; label: string; icon: IconName }[] = [
+  { href: 'https://github.com/jkotzker', label: 'GitHub', icon: 'github' },
+  { href: 'https://hachyderm.io/@kotzker', label: 'Mastodon', icon: 'mastodon' },
+  { href: 'https://bsky.app/profile/joseph.bluesky.kotzker.org', label: 'Bluesky', icon: 'bluesky' },
+  { href: 'https://www.instagram.com/josephkotzker/', label: 'Instagram', icon: 'instagram' },
+  { href: 'https://trakt.tv/users/jkotzker', label: 'Trakt', icon: 'trakt' },
+  { href: 'https://www.linkedin.com/in/josephkotzker/', label: 'LinkedIn', icon: 'linkedin' },
+];
+
+// The section's own page is "page"; a page inside a section (a post under /blog/) marks the section "true".
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const current = (href: string) => {
+  if (href === path) return 'page';
+  if (href !== '/' && href.endsWith('/') && path.startsWith(href)) return 'true';
+  return undefined;
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -18,16 +48,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <link rel="alternate" type="application/rss+xml" title="Joseph Kotzker" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <!-- Every page sets body text (400) and headings (700); italics and code load on demand. -->
+    <Font cssVariable="--font-source-serif" preload={[{ weight: 400, style: 'normal' }, { weight: 700, style: 'normal' }]} />
+    <Font cssVariable="--font-source-code" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/blog/">Blog</a>
-      <a href="/projects/">Projects</a>
-      <a href="/podcasts/">Podcasts</a>
-      <a href="/resume/">Resume</a>
+    <nav class="side" aria-label="Sections">
+      {sections.map((s) => <a href={s.href} aria-current={current(s.href)}><Icon name={s.icon} />{s.label}</a>)}
+      <span class="label">Elsewhere</span>
+      {elsewhere.map((s) => <a href={s.href}><Icon name={s.icon} />{s.label}</a>)}
     </nav>
     <main><slot /></main>
+    <footer>josephkotzker.com</footer>
   </body>
 </html>
