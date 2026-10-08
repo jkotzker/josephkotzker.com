@@ -1,13 +1,17 @@
 ---
 import { getEntry, render } from 'astro:content';
+import Icon from '../components/Icon.astro';
 import Base from '../layouts/Base.astro';
+import { publicResumePdf, RESUME_PDF_HREF } from '../lib/resume-pdf';
 
 const entry = await getEntry('resume', 'resume');
 const Content = entry?.data.public === true ? (await render(entry)).Content : null;
+const pdf = Content !== null && publicResumePdf() !== null;
 ---
 <Base title="Résumé" description="Résumé of Joseph Kotzker." noindex={!Content}>
   <article class="prose">
     <h1>Résumé</h1>
+    {pdf && <p class="links"><a href={RESUME_PDF_HREF}><Icon name="download" />Download PDF</a></p>}
     {Content ? <Content /> : <p>Coming soon.</p>}
   </article>
 </Base>

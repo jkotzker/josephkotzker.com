@@ -1,0 +1,90 @@
+<!-- design-direction
+id: 065
+kind: explore
+parent:
+title: Résumé PDF: conventional, dates on the right
+prompt: |
+  Joseph chose (2026-10-07): résumé PDF tool "HTML + Chrome", public PDF built by the site
+  running the résumé repo's script, look "Explore options first", and: "Let's keep the email off the
+  public one, and change contact.md to joseph@josephkotzker.com but keep that to the private copy."
+  Then: "Yes, go ahead with all of it, then let's get to the PDF design".
+  Round: two to four PDF layouts, each one HTML file printed by Chrome to US Letter, showing the
+  private header (fictional contact block) by default and the public header with ?variant=public.
+  Content is an invented résumé with the real one's structure, since prototypes are public.
+status: dead-end
+created: 2026-10-07
+notes: |
+  GUIDED, moderate (2 of 4). A conventional résumé in the site's type: the name large on the left with
+  the contact block right-aligned opposite it; section labels small, uppercase and tracked over a hairline rule;
+  each role on one line with its dates pushed right. Denser, aiming for two pages.
+  PDFs: explore/pdf/065-private.pdf and explore/pdf/065-public.pdf (US Letter, printed by Chrome).
+  DEAD-END 2026-10-07: Joseph chose 064.
+screenshot: explore/pdf/065-page1.png
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Résumé PDF: conventional, dates on the right</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../fonts.css">
+<style>
+  /* Unique family names, so a locally installed copy of either font can never stand in for the web font
+     (Source Code Pro "for Powerline" on Joseph's Mac did, in the first print). */
+  @font-face { font-family: "PDF Source Serif 4"; font-style: normal; font-weight: 400; src: url(https://cdn.jsdelivr.net/fontsource/fonts/source-serif-4@latest/latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "PDF Source Serif 4"; font-style: italic; font-weight: 400; src: url(https://cdn.jsdelivr.net/fontsource/fonts/source-serif-4@latest/latin-400-italic.woff2) format("woff2"); }
+  @font-face { font-family: "PDF Source Serif 4"; font-style: normal; font-weight: 700; src: url(https://cdn.jsdelivr.net/fontsource/fonts/source-serif-4@latest/latin-700-normal.woff2) format("woff2"); }
+  @font-face { font-family: "PDF Source Serif 4"; font-style: italic; font-weight: 700; src: url(https://cdn.jsdelivr.net/fontsource/fonts/source-serif-4@latest/latin-700-italic.woff2) format("woff2"); }
+  @font-face { font-family: "PDF Source Code Pro"; font-style: normal; font-weight: 400; src: url(https://cdn.jsdelivr.net/fontsource/fonts/source-code-pro@latest/latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "PDF Source Code Pro"; font-style: italic; font-weight: 400; src: url(https://cdn.jsdelivr.net/fontsource/fonts/source-code-pro@latest/latin-400-italic.woff2) format("woff2"); }
+  @font-face { font-family: "PDF Source Code Pro"; font-style: normal; font-weight: 700; src: url(https://cdn.jsdelivr.net/fontsource/fonts/source-code-pro@latest/latin-700-normal.woff2) format("woff2"); }
+  @font-face { font-family: "PDF Source Code Pro"; font-style: italic; font-weight: 700; src: url(https://cdn.jsdelivr.net/fontsource/fonts/source-code-pro@latest/latin-700-italic.woff2) format("woff2"); }
+  
+  :root { --paper: #ffffff; --font-body: "PDF Source Serif 4", serif; --font-mono: "PDF Source Code Pro", monospace; }
+  @page { size: letter; margin: 0.6in; }
+  html { background: var(--color-bg); }
+  body { margin: 0; font: 10pt/1.35 var(--font-body); -webkit-font-smoothing: antialiased; }
+  .sheet { --color-text: #131211; --color-text-muted: #6f6966; --color-link: #1f63dc; --color-rule: #cccbc4;
+           background: var(--paper); color: var(--color-text); box-sizing: border-box; width: 8.5in; min-height: 11in;
+           margin: 24px auto; padding: 0.6in; box-shadow: 0 1px 4px rgba(0,0,0,.25); }
+  @media print { html { background: none; } .sheet { margin: 0; padding: 0; width: auto; min-height: 0; box-shadow: none; } }
+  body:not(.public) .contact.public, body.public .contact.private { display: none; }
+  h1, h2, h3, p, ul { margin: 0; }
+  a { color: var(--color-link); }
+  time { font-variant-numeric: tabular-nums; }
+  h3, .role { break-after: avoid; } li { break-inside: avoid; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.1em; }
+  h1 { font-size: 2em; font-weight: 700; line-height: 1; }
+  .contact { list-style: none; padding: 0; text-align: right; color: var(--color-text-muted); font-size: .88em; line-height: 1.35; }
+  h2 { font-size: .78em; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--color-text-muted);
+       border-bottom: .5pt solid var(--color-rule); padding-bottom: .25em; margin: 1.3em 0 .6em; }
+  .role { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; margin-top: .75em; }
+  h3 { font-size: 1em; font-weight: 700; }
+  .meta { color: var(--color-text-muted); font-size: .9em; white-space: nowrap; }
+  ul { padding-left: 1.1em; margin-top: .2em; } li { margin-bottom: .12em; } li::marker { color: var(--color-text-muted); }
+</style>
+</head>
+<body>
+<script>if (new URLSearchParams(location.search).get('variant') === 'public') document.body.classList.add('public');</script>
+<div class="sheet">
+<header><h1>Joseph Kotzker</h1><ul class="contact private"><li>joseph@example.com</li><li>123 Example Street, Springfield, NJ 07000</li><li>(201) 555-0123</li><li>linkedin.com/in/example</li><li>github.com/example</li></ul><ul class="contact public"><li>josephkotzker.com</li></ul></header>
+<section><h2>About</h2><p>I&#x27;m a senior software engineer at Example Media, working across the full stack with a focus on the backend systems and services behind a platform of tens of thousands of community sites and millions of users. Before that, I was a full-stack developer at Sample Events, building registration and fundraising tools for non-profits, and before that I spent nearly four years at Placeholder Labs building compliance software. I have a B.S. in Computer Science from State University.</p></section>
+<section><h2>Experience</h2><div class="role"><h3>Senior Software Engineer, Example Media</h3><p class="meta"><time>2026-04</time> – present</p></div>
+<ul><li>Core member of a small team on a platform-wide search overhaul, modernizing the search stack and index for AI-assisted search</li><li>Take an active role in driving initiatives from design through delivery, with substantial collaboration across teams</li><li>Use LLM-powered coding tools and agents extensively day to day, and build the workflows around them</li></ul>
+<div class="role"><h3>Software Engineer II, Example Media</h3><p class="meta"><time>2023-01</time> – <time>2026-04</time></p></div>
+<ul><li>Backend engineering for a large community platform under sustained high traffic</li><li>Built and maintained Java and Spring Boot microservices, and led several framework migrations</li><li>Developed queue-based, message-driven pipelines</li><li>Worked across two public clouds and the company&#x27;s own internal infrastructure</li><li>Extended a mature platform carrying thousands of customizations, through first- and third-party extensions</li><li>Built early AI- and LLM-powered user-facing features at scale, using retrieval-augmented generation</li><li>Adopted agentic development and LLM-assisted coding tools early</li></ul>
+<div class="role"><h3>Software Developer, Sample Events</h3><p class="meta"><time>2021-04</time> – <time>2022-12</time></p></div>
+<ul><li>Full-stack development on a web platform for event registration and donations, in PHP and MySQL</li><li>Led the ground-up rework of the platform&#x27;s reporting features, and redesigned the donation flow</li></ul>
+<div class="role"><h3>Senior Software Engineer, Placeholder Labs</h3><p class="meta"><time>2020-01</time> – <time>2021-03</time></p></div>
+<ul><li>Developer and technical lead on a suite of compliance applications; led major redesigns of the audit trail and workflow engine</li><li>Led the design of a configurable risk-analysis feature, and improved the CI review process</li></ul>
+<div class="role"><h3>Associate Software Developer, Placeholder Labs</h3><p class="meta"><time>2017-06</time> – <time>2019-12</time></p></div>
+<ul><li>Full-stack development on the company&#x27;s primary cloud application, taking on a leadership role on several teams</li><li>Built internal tooling to improve the development lifecycle</li></ul>
+<div class="role"><h3>Intern, Sample Fax Co.</h3><p class="meta"><time>2016-05</time> – <time>2017-05</time></p></div>
+<ul><li>Built VPN connections for remote Linux servers, and a Python service for barcodes scanned in the field</li></ul></section>
+<section><h2>Skills</h2><ul class="skills"><li><b>Languages</b>: strongest in Java, PHP and JavaScript (including Node.js); experience with Python and C</li><li><b>Backend</b>: Spring and Spring Boot, microservice architecture, and common Java libraries</li><li><b>Messaging</b>: message-driven systems and pipelines</li><li><b>Cloud</b>: two public clouds and internal infrastructure platforms</li><li><b>Search and AI</b>: AI-powered search, RAG and vector databases</li><li><b>AI-assisted development</b>: agentic coding workflows; development of agent skills, plugins and MCP integrations</li><li><b>Build and CI</b>: Jenkins, including scripted pipelines in Groovy; Gradle, Maven and Docker</li><li><b>Web</b>: modern HTML, CSS and JavaScript</li><li><b>Testing</b>: unit testing and mocking with JUnit and PHPUnit</li><li><b>Version control</b>: Git and GitHub, branching strategies and advanced Git usage</li><li><b>Systems</b>: Linux and Unix-like systems, shell scripting and the command line</li><li><b>Process</b>: Agile/Scrum, issue trackers, technical design documents</li><li><b>Spoken languages</b>: fluent in English and a second language</li></ul></section>
+<section><h2>Education</h2><div class="role"><h3>B.S. in Computer Science, State University</h3><p class="meta"><time>2017-05</time></p></div><ul><li>Minors in Philosophy and History</li></ul></section>
+</div>
+</body>
+</html>

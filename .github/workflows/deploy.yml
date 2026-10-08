@@ -38,6 +38,12 @@ jobs:
 
       - run: npm ci
 
+      # The résumé repo's own script; --public-only never reads its contact file. The site serves the
+      # result at /resume/joseph-kotzker-resume.pdf when the résumé is public.
+      - name: Build the public résumé PDF
+        working-directory: .resume
+        run: npm ci && npm run build:public
+
       - name: Check, test, build, verify
         run: npm run ci
 
