@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import LinkRow from '../components/LinkRow.astro';
 import Base from '../layouts/Base.astro';
+import { inlineMarkdown } from '../lib/inline-markdown';
 import { inAuthoredOrder } from '../lib/curated-loader';
 
 const projects = inAuthoredOrder(await getCollection('projects'));
@@ -14,7 +15,7 @@ const projects = inAuthoredOrder(await getCollection('projects'));
     projects.map(({ id, data }) => (
       <>
         <h2 id={id}>{data.name}</h2>
-        <p>{data.description}</p>
+        <p set:html={inlineMarkdown(data.description)} />
         <LinkRow links={data.links} />
       </>
     ))
