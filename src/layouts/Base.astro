@@ -61,7 +61,7 @@ const current = (href: string) => {
     <nav class="side" aria-label="Sections">
       {sections.map((s) => <a href={s.href} aria-current={current(s.href)}><Icon name={s.icon} />{s.label}</a>)}
       <span class="label">Elsewhere</span>
-      {elsewhere.map((s) => <a href={s.href}><Icon name={s.icon} />{s.label}</a>)}
+      {elsewhere.map((s) => <a href={s.href} rel="me"><Icon name={s.icon} />{s.label}</a>)}
       {/* The address is assembled in the browser so it never appears whole in the HTML, which keeps it
           from scrapers that do not run JavaScript; without JavaScript it is shown in words instead. */}
       <a data-mail-user="joseph" data-mail-domain="josephkotzker.com"><Icon name="email" />Email</a>
