@@ -12,6 +12,9 @@ interface Props {
 const { title, description, noindex = false } = Astro.props;
 const fullTitle = title === 'Joseph Kotzker' ? title : `${title} — Joseph Kotzker`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// The year range runs from the site's first year to the year of the build that deployed it.
+const buildYear = new Date().getFullYear();
+const years = buildYear > 2026 ? `2026–${buildYear}` : '2026';
 
 const sections: { href: string; label: string; icon: IconName }[] = [
   { href: '/', label: 'Home', icon: 'home' },
@@ -68,7 +71,7 @@ const current = (href: string) => {
       <noscript><span class="mail-words">joseph at josephkotzker.com</span></noscript>
     </nav>
     <main><slot /></main>
-    <footer>josephkotzker.com</footer>
+    <footer>josephkotzker.com · © {years} Joseph Kotzker</footer>
     <script is:inline>
       for (const a of document.querySelectorAll('a[data-mail-user]')) a.href = `mailto:${a.dataset.mailUser}@${a.dataset.mailDomain}`;
     </script>
