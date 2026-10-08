@@ -46,6 +46,7 @@ const PHONE = /(?<!\d)(?:\+?1[-.\s]{0,3})?\(?\d{3}\)?[-.\s]{0,3}\d{3}[-.\s]{0,3}
 // A house number followed by a street name and a street-type word, a unit designator, or a
 // two-letter state code followed by a ZIP code.
 const STREET = /\b\d{1,6}\s+(?:[A-Z][\w'.-]*\s+){1,4}(?:Ave(?:nue)?|St(?:reet)?|R(?:oa)?d|Blvd|Boulevard|Dr(?:ive)?|L(?:a)?ne?|Ct|Court|Pl(?:ace)?|Way|Ter(?:race)?|Pkwy|Parkway|Hwy|Highway|Cir(?:cle)?|Sq(?:uare)?)\b/;
+const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)*\.[A-Za-z]{2,}/;
 const UNIT = /\b(?:Apt|Apartment|Suite|Ste|Unit)\.?\s*#?\s*\d/i;
 const STATE_ZIP = /\b[A-Z]{2},?\s+\d{5}(?:-\d{4})?\b/;
 
@@ -112,6 +113,11 @@ export function verifyDist({ distDir = 'dist', postsDir = 'src/content/posts', s
         if (forms.some((form) => text.includes(form))) failures.push(`draft "${front.title}" appears in ${path}`);
       }
     }
+  }
+
+  // Email addresses are assembled in the browser (see Base.astro), so none may appear whole in the output.
+  for (const { path, text } of outputs) {
+    if (EMAIL.test(text) || /mailto:[\w.%+-]/i.test(text)) failures.push(`${path} contains an email address`);
   }
 
   // Backstop only; the real control is the public: true opt-in plus the split source.

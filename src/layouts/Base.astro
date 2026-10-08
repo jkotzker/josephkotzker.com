@@ -30,7 +30,6 @@ const elsewhere: { href: string; label: string; icon: IconName }[] = [
   { href: 'https://open.spotify.com/user/1211038582', label: 'Spotify', icon: 'spotify' },
   { href: 'https://trakt.tv/users/jkotzker', label: 'Trakt', icon: 'trakt' },
   { href: 'https://www.linkedin.com/in/josephkotzker/', label: 'LinkedIn', icon: 'linkedin' },
-  { href: 'mailto:joseph@josephkotzker.com', label: 'Email', icon: 'email' },
 ];
 
 // The section's own page is "page"; a page inside a section (a post under /blog/) marks the section "true".
@@ -63,8 +62,15 @@ const current = (href: string) => {
       {sections.map((s) => <a href={s.href} aria-current={current(s.href)}><Icon name={s.icon} />{s.label}</a>)}
       <span class="label">Elsewhere</span>
       {elsewhere.map((s) => <a href={s.href}><Icon name={s.icon} />{s.label}</a>)}
+      {/* The address is assembled in the browser so it never appears whole in the HTML, which keeps it
+          from scrapers that do not run JavaScript; without JavaScript it is shown in words instead. */}
+      <a data-mail-user="joseph" data-mail-domain="josephkotzker.com"><Icon name="email" />Email</a>
+      <noscript><span class="mail-words">joseph at josephkotzker.com</span></noscript>
     </nav>
     <main><slot /></main>
     <footer>josephkotzker.com</footer>
+    <script is:inline>
+      for (const a of document.querySelectorAll('a[data-mail-user]')) a.href = `mailto:${a.dataset.mailUser}@${a.dataset.mailDomain}`;
+    </script>
   </body>
 </html>
