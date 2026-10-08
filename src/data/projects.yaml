@@ -1,11 +1,11 @@
 # Curated entries; filled in Part 3. Each entry needs a unique `id`; see src/content.config.ts for the fields.
-# `summary` is one line for the home page; `description` is two or three sentences for /projects.
+# `summary` is one line for the home page; `description` is two or three sentences for /projects, in inline Markdown.
 # `links` (source, homebrew, website, appstore, download) must mark exactly one `primary: true`,
 # which is where the name links on the home page.
 - id: fromscratch
   name: FromScratch
   summary: a minimal autosaving scratchpad for macOS, kept building on current systems
-  description: "A fork of Kilian Valkhof's FromScratch, a note-taking app whose only interface is the text you type. It runs on Apple Silicon and current macOS, and adds a redrawn icon, a font picker, and colour schemes from iTerm2 colour files."
+  description: "A fork of [Kilian Valkhof](https://github.com/Kilian)'s [FromScratch](https://github.com/Kilian/fromscratch), a note-taking app whose only interface is the text you type. It runs on Apple Silicon and current macOS, and adds a redrawn icon, a font picker, and colour schemes from iTerm2 colour files."
   links:
     - { kind: source, url: 'https://github.com/jkotzker/fromscratch', primary: true }
     - { kind: download, url: 'https://github.com/jkotzker/fromscratch/releases/latest' }

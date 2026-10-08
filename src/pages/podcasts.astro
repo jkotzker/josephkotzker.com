@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import LinkRow from '../components/LinkRow.astro';
 import Base from '../layouts/Base.astro';
+import { inlineMarkdown } from '../lib/inline-markdown';
 import { inAuthoredOrder } from '../lib/curated-loader';
 
 const podcasts = inAuthoredOrder(await getCollection('podcasts'));
@@ -17,7 +18,7 @@ const label = (e: { season?: number; episode?: number }) =>
       <>
         <h2 id={id}>{data.name}</h2>
         <p class="meta">{data.role}</p>
-        <p>{data.description}</p>
+        <p set:html={inlineMarkdown(data.description)} />
         {data.episodes && data.episodes.length > 0 && (
           <ul class="episodes labelled">
             {/* An unnumbered episode keeps an empty label so its title stays in the title column. */}
