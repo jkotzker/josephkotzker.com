@@ -95,6 +95,16 @@ describe('verifyDist', () => {
     expect(verifyDist(f)).toEqual(['resume/index.html contains a phone-number-like string']);
   });
 
+  it('fails on an email address or mailto link anywhere in the output', () => {
+    expect(verifyDist(fixture({ dist: { 'index.html': '<p>write to someone@example.com</p>' } }))).toEqual(['index.html contains an email address']);
+    expect(verifyDist(fixture({ dist: { 'blog/index.html': '<a href="mailto:x">Mail</a>' } }))).toEqual(['blog/index.html contains an email address']);
+  });
+
+  it('allows an address assembled from data attributes', () => {
+    const f = fixture({ dist: { 'index.html': '<a data-mail-user="joseph" data-mail-domain="josephkotzker.com">Email</a><script>a.href = `mailto:${u}@${d}`;</script>' } });
+    expect(verifyDist(f)).toEqual([]);
+  });
+
   it('fails on an address-like string in the resume', () => {
     const f = fixture({ dist: { 'resume/index.html': '<p>123 Example Street</p>' } });
     expect(verifyDist(f)).toEqual(['resume/index.html contains a street-address-like string']);
