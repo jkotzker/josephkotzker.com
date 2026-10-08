@@ -26,8 +26,11 @@ const elsewhere: { href: string; label: string; icon: IconName }[] = [
   { href: 'https://hachyderm.io/@kotzker', label: 'Mastodon', icon: 'mastodon' },
   { href: 'https://bsky.app/profile/joseph.bluesky.kotzker.org', label: 'Bluesky', icon: 'bluesky' },
   { href: 'https://www.instagram.com/josephkotzker/', label: 'Instagram', icon: 'instagram' },
+  { href: 'https://discord.com/users/275653290111270923', label: 'Discord', icon: 'discord' },
+  { href: 'https://open.spotify.com/user/1211038582', label: 'Spotify', icon: 'spotify' },
   { href: 'https://trakt.tv/users/jkotzker', label: 'Trakt', icon: 'trakt' },
   { href: 'https://www.linkedin.com/in/josephkotzker/', label: 'LinkedIn', icon: 'linkedin' },
+  { href: 'mailto:joseph@josephkotzker.com', label: 'Email', icon: 'email' },
 ];
 
 // The section's own page is "page"; a page inside a section (a post under /blog/) marks the section "true".
@@ -51,7 +54,9 @@ const current = (href: string) => {
     <!-- Every page sets body text (400) and headings (700); italics and code load on demand. -->
     <Font cssVariable="--font-source-serif" preload={[{ weight: 400, style: 'normal' }, { weight: 700, style: 'normal' }]} />
     <Font cssVariable="--font-source-code" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body>
     <nav class="side" aria-label="Sections">

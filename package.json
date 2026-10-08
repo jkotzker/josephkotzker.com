@@ -14,7 +14,8 @@
     "preview": "astro preview",
     "test": "vitest run",
     "verify": "node scripts/verify-dist.mjs && node scripts/check-links.mjs dist",
-    "ci": "npm run check && npm test && npm run build && npm run verify"
+    "ci": "npm run check && npm test && npm run build && npm run verify && npm run verify:resume-gate",
+    "verify:resume-gate": "node scripts/check-resume-gate.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

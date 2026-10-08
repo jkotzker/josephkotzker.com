@@ -1,6 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import Icon from '../components/Icon.astro';
+import headshot from '../assets/headshot.jpg';
 import Base from '../layouts/Base.astro';
 import { inAuthoredOrder } from '../lib/curated-loader';
 import { isoDate } from '../lib/dates';
@@ -14,10 +15,10 @@ const projects = inAuthoredOrder(await getCollection('projects'));
 // "Co-host, with …" reads as a clause after the dash on this page.
 const asClause = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 ---
-<Base title="Joseph Kotzker" description="Joseph Kotzker — software engineer.">
-  <div class="headshot" role="img" aria-label="Headshot placeholder"><Icon name="user" class="icon" /></div>
+<Base title="Joseph Kotzker" description="Joseph Kotzker, senior software engineer at Fandom and co-host of In Reverse.">
+  <div class="headshot"><Image src={headshot} alt="Joseph Kotzker" width={96} height={96} densities={[1, 2, 3]} loading="eager" /></div>
   <h1>Joseph Kotzker</h1>
-  <p>I'm a software engineer. I co-host <a href="https://www.inreversecast.com">In Reverse</a> with Zach Kotzker, a podcast about watching the Fast &amp; Furious films for the first time, newest first.</p>
+  <p>I'm a senior software engineer currently at <a href="https://www.fandom.com">Fandom</a>; I work across the stack, but mostly on the backend systems and services powering the fan experiences Fandom is known for. With my brother Zach, I co-host <a href="https://www.inreversecast.com">In Reverse</a>, a podcast about the Fast &amp; Furious films from two people who had never seen one until we started at Fast X and worked our way back. I also write, build and make a few other things, most of which you'll find here.</p>
 
   {posts.length > 0 && (
     <>

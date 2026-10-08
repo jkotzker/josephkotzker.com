@@ -1,0 +1,72 @@
+<!-- design-direction
+id: 060
+kind: explore
+parent:
+title: Favicon: bold serif "j" on the page colour
+prompt: |
+  Joseph approved (2026-10-07): "Yes, go ahead with those" -- including a favicon replacement
+  explored as a small design-direction round. /design-explore args: "favicon for josephkotzker.com --
+  a small set (four variants) of site icons in the adopted style: tokens.css colours, Source Serif 4
+  type, outline-icon language; each prototype shows the icon at 16, 32 and 180 px on light and dark
+  browser chrome, half guided by the adopted design, half wilder."
+status: dead-end
+created: 2026-10-07
+notes: |
+  GUIDED, minimal (1 of 4). The lowercase j of Source Serif 4 Bold in the text colour on the
+  page background, square with the site's small radius. Recolours with the scheme like the page.
+  DEAD-END 2026-10-07: Joseph chose 061 ("061 is the best because it keeps it simple and close to the site design").
+screenshot:
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Favicon: bold serif "j" on the page colour — Joseph Kotzker</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../fonts.css">
+<style>
+  /* Site values from ../tokens.css. The two tab strips are mock browser chrome, so their colours are
+     literal stand-ins for Safari's light and dark tab bars, not site tokens. */
+  html { background: var(--color-bg); color: var(--color-text); }
+  body { margin: 0 auto; padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom); max-width: var(--measure);
+         font: var(--text-base)/var(--leading-body) var(--font-body); -webkit-font-smoothing: antialiased; }
+  h1 { font-size: var(--text-base); font-weight: var(--weight-bold); margin: 0 0 var(--space-name-after); }
+  p { margin: 0 0 var(--space-paragraph); }
+  .meta { color: var(--color-text-muted); font-size: var(--text-small); }
+  .strip { display: flex; gap: 2px; padding: 8px 8px 0; border-radius: 6px 6px 0 0; margin: 0 0 1.2em; }
+  .strip.light { background: #dcdcdc; color-scheme: light; }
+  .strip.dark { background: #1c1c1e; color-scheme: dark; }
+  .tab { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 6px 6px 0 0;
+          font: 12px/1 -apple-system, system-ui, sans-serif; }
+  .light .tab { background: #f6f6f6; color: #222; } .light .tab.other { background: transparent; color: #555; }
+  .dark .tab { background: #3a3a3c; color: #eee; } .dark .tab.other { background: transparent; color: #aaa; }
+  /* The icon carries the scheme of the chrome it sits in, as an SVG favicon with a
+     prefers-color-scheme rule would. */
+  .light .ico { --color-bg: #ebebeb; --color-text: #131211; --color-link: #1f63dc; }
+  .dark .ico { --color-bg: #22211e; --color-text: #e9e6e0; --color-link: #00c7fc; }
+  .sizes { display: flex; align-items: flex-end; gap: 1.5rem; margin: 0 0 1.2em; }
+  .sizes figure { margin: 0; text-align: center; }
+  .sizes figcaption { margin-top: .4em; }
+  .home { border-radius: 22%; overflow: hidden; display: block; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+  <h1>Favicon: bold serif "j" on the page colour</h1>
+  <p class="meta">Explore 060. Light and dark browser chrome; the icon follows each scheme.</p>
+
+  <div class="strip light">
+    <div class="tab"><svg class="ico" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="3" fill="var(--color-bg)"/><text x="16" y="24.5" text-anchor="middle" font-family="var(--font-body)" font-weight="700" font-size="27" fill="var(--color-text)">j</text></svg>Joseph Kotzker</div><div class="tab other">Another tab</div>
+  </div>
+  <div class="strip dark">
+    <div class="tab"><svg class="ico" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="3" fill="var(--color-bg)"/><text x="16" y="24.5" text-anchor="middle" font-family="var(--font-body)" font-weight="700" font-size="27" fill="var(--color-text)">j</text></svg>Joseph Kotzker</div><div class="tab other">Another tab</div>
+  </div>
+
+  <div class="sizes">
+    <figure class="ico light-ico"><svg class="ico" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="3" fill="var(--color-bg)"/><text x="16" y="24.5" text-anchor="middle" font-family="var(--font-body)" font-weight="700" font-size="27" fill="var(--color-text)">j</text></svg><figcaption class="meta">16</figcaption></figure>
+    <figure class="ico light-ico"><svg class="ico" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="3" fill="var(--color-bg)"/><text x="16" y="24.5" text-anchor="middle" font-family="var(--font-body)" font-weight="700" font-size="27" fill="var(--color-text)">j</text></svg><figcaption class="meta">32</figcaption></figure>
+    <figure><span class="strip light" style="padding:0;margin:0;background:none"><svg class="ico home" width="180" height="180" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="3" fill="var(--color-bg)"/><text x="16" y="24.5" text-anchor="middle" font-family="var(--font-body)" font-weight="700" font-size="27" fill="var(--color-text)">j</text></svg></span><figcaption class="meta">180, home screen</figcaption></figure>
+  </div>
+</body>
+</html>

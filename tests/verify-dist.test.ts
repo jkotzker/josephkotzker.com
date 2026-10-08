@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { verifyDist } from '../scripts/verify-dist.mjs';
+import { contactLeaks, verifyDist } from '../scripts/verify-dist.mjs';
 
 const REQUIRED = [
   'index.html', '404.html', 'CNAME', 'rss.xml', 'sitemap-index.xml',
@@ -95,6 +95,11 @@ describe('verifyDist', () => {
     expect(verifyDist(f)).toEqual(['resume/index.html contains a phone-number-like string']);
   });
 
+  it('fails on an address-like string in the resume', () => {
+    const f = fixture({ dist: { 'resume/index.html': '<p>123 Example Street</p>' } });
+    expect(verifyDist(f)).toEqual(['resume/index.html contains a street-address-like string']);
+  });
+
   it('fails on a missing required file', () => {
     const f = fixture();
     unlinkSync(join(f.distDir, '404.html'));
@@ -111,3 +116,44 @@ describe('verifyDist', () => {
     expect(verifyDist(f)).toEqual(['could not parse front matter in bad.md']);
   });
 });
+
+describe('contactLeaks', () => {
+  const PHONE = ['a phone-number-like string'];
+  const ADDRESS = ['a street-address-like string'];
+
+  it.each([
+    '555-123-4567', '555.123.4567', '555 123 4567', '(555) 123-4567', '(555)123-4567',
+    '5551234567', '+1 555 123 4567', '+15551234567', '1-555-123-4567', 'm. 555-123-4567',
+  ])('finds the phone number %s', (phone) => {
+    expect(contactLeaks(`<p>${phone}</p>`)).toEqual(PHONE);
+  });
+
+  it('finds a phone number split across tags or entities', () => {
+    expect(contactLeaks('<p><strong>555</strong>-123-4567</p>')).toEqual(PHONE);
+    expect(contactLeaks('<p>555&nbsp;123&nbsp;4567</p>')).toEqual(PHONE);
+  });
+
+  it('finds a tel: link', () => {
+    expect(contactLeaks('<a href="tel:+15551234567">Call</a>')).toEqual(PHONE);
+  });
+
+  it.each([
+    '123 Example Street', '31 Lincoln Ave, Apt 1', '4 Main St.', '1600 Pennsylvania Avenue',
+    '9 Old Mill Road', 'Apt 4B', 'Suite 200', 'Springfield, NJ 07000', 'Springfield, NJ 07000-1234',
+  ])('finds the address fragment %s', (address) => {
+    expect(contactLeaks(`<p>${address}</p>`)).toEqual(ADDRESS);
+  });
+
+  it.each([
+    '2021-04 – present', '2017 – 2022', 'Bachelor of Science, 2017-05', 'ISO 8601 dates',
+    'Rutgers University, New Brunswick, NJ', 'Led a team of 12 engineers', 'Cut build times by 40%',
+    'S3 E8', 'Unit testing and CI',
+  ])('leaves ordinary résumé text alone: %s', (text) => {
+    expect(contactLeaks(`<p>${text}</p>`)).toEqual([]);
+  });
+
+  it('ignores long numeric ids inside URLs', () => {
+    expect(contactLeaks('<a href="https://open.spotify.com/user/1211038582">Spotify</a>')).toEqual([]);
+  });
+});
+
