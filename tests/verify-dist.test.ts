@@ -110,6 +110,36 @@ describe('verifyDist', () => {
     expect(verifyDist(f)).toEqual(['resume/index.html contains a street-address-like string']);
   });
 
+  describe('published résumé PDF', () => {
+    const pdf = { 'resume/joseph-kotzker-resume.pdf': '%PDF-1.4' };
+    const source = (html: string) => {
+      const dir = mkdtempSync(join(tmpdir(), 'pdfsrc-'));
+      writeFileSync(join(dir, 'resume-public.html'), html);
+      return join(dir, 'resume-public.html');
+    };
+
+    it('passes when its source HTML is clean', () => {
+      const f = fixture({ dist: pdf });
+      expect(verifyDist({ ...f, resumePdfSource: source('<h1>Joseph Kotzker</h1><p>josephkotzker.com</p>') })).toEqual([]);
+    });
+
+    it('fails when its source HTML carries a phone number, address or email', () => {
+      const f = fixture({ dist: pdf });
+      expect(verifyDist({ ...f, resumePdfSource: source('<li>(201) 555-0123</li><li>123 Example Street</li><li>a@b.com</li>') })).toEqual([
+        'resume PDF source contains a phone-number-like string',
+        'resume PDF source contains a street-address-like string',
+        'resume PDF source contains an email address',
+      ]);
+    });
+
+    it('fails when the PDF is published without a source to check', () => {
+      const f = fixture({ dist: pdf });
+      expect(verifyDist({ ...f, resumePdfSource: join(tmpdir(), 'does-not-exist.html') })).toEqual([
+        'resume PDF is published but its source HTML is missing, so it cannot be checked',
+      ]);
+    });
+  });
+
   it('fails on a missing required file', () => {
     const f = fixture();
     unlinkSync(join(f.distDir, '404.html'));

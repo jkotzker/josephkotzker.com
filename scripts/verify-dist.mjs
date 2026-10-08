@@ -72,7 +72,12 @@ export function contactLeaks(html) {
   return leaks;
 }
 
-export function verifyDist({ distDir = 'dist', postsDir = 'src/content/posts', site = 'josephkotzker.com' } = {}) {
+export function verifyDist({
+  distDir = 'dist',
+  postsDir = 'src/content/posts',
+  site = 'josephkotzker.com',
+  resumePdfSource = join(process.env.RESUME_DIR ?? '.resume', 'dist/resume-public.html'),
+} = {}) {
   const failures = [];
 
   for (const path of REQUIRED) {
@@ -124,6 +129,18 @@ export function verifyDist({ distDir = 'dist', postsDir = 'src/content/posts', s
   const resumePath = join(distDir, 'resume/index.html');
   const resume = existsSync(resumePath) ? readFileSync(resumePath, 'utf8') : '';
   failures.push(...contactLeaks(resume).map((kind) => `resume/index.html contains ${kind}`));
+
+  // The published PDF is printed by the résumé repo from this HTML; the PDF itself is not text-searchable
+  // here, so its source is checked with the same rules.
+  if (existsSync(join(distDir, 'resume/joseph-kotzker-resume.pdf'))) {
+    if (!existsSync(resumePdfSource)) {
+      failures.push('resume PDF is published but its source HTML is missing, so it cannot be checked');
+    } else {
+      const source = readFileSync(resumePdfSource, 'utf8');
+      failures.push(...contactLeaks(source).map((kind) => `resume PDF source contains ${kind}`));
+      if (EMAIL.test(source) || /mailto:[\w.%+-]/i.test(source)) failures.push('resume PDF source contains an email address');
+    }
+  }
 
   return failures;
 }

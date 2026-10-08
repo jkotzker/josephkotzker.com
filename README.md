@@ -21,7 +21,7 @@ Projects and podcasts are curated YAML in `src/data/` (`projects.yaml`, `podcast
 
 ## Resume
 
-CI checks out a private repository into `.resume/` (git-ignored) using the read-only deploy key stored in the `RESUME_DEPLOY_KEY` secret. The `/resume` page renders the content only when the front matter of `.resume/resume.md` has `public: true`; otherwise it shows a "coming soon" placeholder, which is marked `noindex`.
+CI checks out a private repository into `.resume/` (git-ignored) using the read-only deploy key stored in the `RESUME_DEPLOY_KEY` secret. The `/resume` page renders the content only when the front matter of `.resume/resume.md` has `public: true`; otherwise it shows a "coming soon" placeholder, which is marked `noindex`. Before the site builds, the deploy workflow runs the résumé repo's `npm run build:public`, which prints `dist/resume-public.pdf` with Chrome without reading its contact file; when the résumé is public, the site serves that PDF at `/resume/joseph-kotzker-resume.pdf` and links it from `/resume`. `npm run verify` checks the PDF's source HTML for contact details.
 
 ## Workflows
 
