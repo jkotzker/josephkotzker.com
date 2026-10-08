@@ -61,8 +61,9 @@ const podcasts = defineCollection({
 // The private jkotzker/resume repo is checked out to .resume/ in CI. Its content
 // is rendered only when its front matter says `public: true`, which is added in
 // Part 3 after the contact details are split out of resume.md.
+// RESUME_DIR exists for scripts/check-resume-gate.mjs, which builds a synthetic résumé.
 const resume = defineCollection({
-  loader: glob({ base: './.resume', pattern: 'resume.md' }),
+  loader: glob({ base: process.env.RESUME_DIR ?? './.resume', pattern: 'resume.md' }),
   schema: z.object({ public: z.boolean().default(false) }),
 });
 

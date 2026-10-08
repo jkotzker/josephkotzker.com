@@ -40,6 +40,37 @@ function titleForms(title) {
   ]);
 }
 
+// US phone numbers with or without separators, an optional +1, and a parenthesised area code.
+// Up to three separator characters between groups, since removing tags leaves extra spaces.
+const PHONE = /(?<!\d)(?:\+?1[-.\s]{0,3})?\(?\d{3}\)?[-.\s]{0,3}\d{3}[-.\s]{0,3}\d{4}(?!\d)/;
+// A house number followed by a street name and a street-type word, a unit designator, or a
+// two-letter state code followed by a ZIP code.
+const STREET = /\b\d{1,6}\s+(?:[A-Z][\w'.-]*\s+){1,4}(?:Ave(?:nue)?|St(?:reet)?|R(?:oa)?d|Blvd|Boulevard|Dr(?:ive)?|L(?:a)?ne?|Ct|Court|Pl(?:ace)?|Way|Ter(?:race)?|Pkwy|Parkway|Hwy|Highway|Cir(?:cle)?|Sq(?:uare)?)\b/;
+const UNIT = /\b(?:Apt|Apartment|Suite|Ste|Unit)\.?\s*#?\s*\d/i;
+const STATE_ZIP = /\b[A-Z]{2},?\s+\d{5}(?:-\d{4})?\b/;
+
+function visibleText(html) {
+  return html
+    .replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;|&#160;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/\s+/g, ' ');
+}
+
+/**
+ * What kinds of contact detail appear in the page. Only the visible text is searched, plus tel:
+ * links: URLs elsewhere in the page carry long numeric ids (a Spotify user id is ten digits).
+ */
+export function contactLeaks(html) {
+  const text = visibleText(html);
+  const leaks = [];
+  if (PHONE.test(text) || /href=["']?tel:/i.test(html)) leaks.push('a phone-number-like string');
+  if ([STREET, UNIT, STATE_ZIP].some((re) => re.test(text))) leaks.push('a street-address-like string');
+  return leaks;
+}
+
 export function verifyDist({ distDir = 'dist', postsDir = 'src/content/posts', site = 'josephkotzker.com' } = {}) {
   const failures = [];
 
@@ -86,7 +117,7 @@ export function verifyDist({ distDir = 'dist', postsDir = 'src/content/posts', s
   // Backstop only; the real control is the public: true opt-in plus the split source.
   const resumePath = join(distDir, 'resume/index.html');
   const resume = existsSync(resumePath) ? readFileSync(resumePath, 'utf8') : '';
-  if (/\(?\b\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b/.test(resume)) failures.push('resume/index.html contains a phone-number-like string');
+  failures.push(...contactLeaks(resume).map((kind) => `resume/index.html contains ${kind}`));
 
   return failures;
 }
