@@ -4,7 +4,7 @@
 - id: in-reverse
   name: In Reverse
   role: Co-host, with Zach Kotzker
-  description: "Joseph and his brother Zach came to the Fast & Furious franchise knowing nothing about it. Now they're consuming all of it, films, games, books and more, in reverse: starting with *Fast X* and working back to the very beginning."
+  description: "Joseph and his brother Zach came to the Fast & Furious franchise knowing nothing about it. Now they're consuming all of it, films, games, books, and more, in reverse: starting with *Fast X* and working back to the very beginning."
   feed: https://www.inreversecast.com/rss
   links:
     - { kind: website, url: 'https://www.inreversecast.com', primary: true }

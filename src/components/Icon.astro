@@ -1,8 +1,8 @@
 ---
 // Outline icons copied verbatim from the adopted prototypes (design/forks/053, 058, 059):
 // Lucide 1.49.0 for sections and generic links, Tabler 3.48.0 outline for brands,
-// Lucide `radio` standing in for Overcast. GitHub's mark doubles as "Source". Added 2026-10-07 from the
-// same versions: Tabler `brand-discord`, Lucide `mail`.
+// Lucide `radio` standing in for Overcast. GitHub's mark doubles as "Source", and Lucide `package`
+// (Homebrew's box) as "npm". Added 2026-10-07 from the same versions: Tabler `brand-discord`, Lucide `mail`.
 const paths = {
   home: "<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />",
   blog: "<path d=\"M13 21h8\" /> <path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\" />",
@@ -29,13 +29,14 @@ const paths = {
   email: "<path d=\"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7\" /> <rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\" />",
 } as const;
 
-export type IconName = keyof typeof paths | 'source';
+export type IconName = keyof typeof paths | 'source' | 'npm';
 
 interface Props {
   name: IconName;
   class?: string;
 }
 const { name, class: className = 'navicon' } = Astro.props;
-const body = paths[name === 'source' ? 'github' : name];
+const aliases = { source: 'github', npm: 'homebrew' } as const;
+const body = paths[name === 'source' || name === 'npm' ? aliases[name] : name];
 ---
 <svg class={className} aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={body} />

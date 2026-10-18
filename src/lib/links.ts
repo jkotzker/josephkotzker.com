@@ -4,6 +4,7 @@ import { z } from 'astro/zod';
 export const LINK_KINDS = {
   source: { label: 'Source', icon: 'source' },
   homebrew: { label: 'Homebrew', icon: 'homebrew' },
+  npm: { label: 'npm', icon: 'npm' },
   website: { label: 'Website', icon: 'website' },
   appstore: { label: 'App Store', icon: 'appstore' },
   download: { label: 'Download', icon: 'download' },
