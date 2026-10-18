@@ -1,6 +1,6 @@
 # Curated entries; filled in Part 3. Each entry needs a unique `id`; see src/content.config.ts for the fields.
 # `summary` is one line for the home page; `description` is two or three sentences for /projects, in inline Markdown.
-# `links` (source, homebrew, website, appstore, download) must mark exactly one `primary: true`,
+# `links` (source, homebrew, npm, website, appstore, download) must mark exactly one `primary: true`,
 # which is where the name links on the home page.
 - id: fromscratch
   name: FromScratch
@@ -9,3 +9,10 @@
   links:
     - { kind: source, url: 'https://github.com/jkotzker/fromscratch', primary: true }
     - { kind: download, url: 'https://github.com/jkotzker/fromscratch/releases/latest' }
+- id: firesidefm-mcp-server
+  name: firesidefm-mcp-server
+  summary: an unofficial MCP server for the Fireside.fm podcast hosting API
+  description: "An unofficial [MCP](https://modelcontextprotocol.io) server for the [Fireside.fm](https://fireside.fm) podcast hosting API. When configured, it lets AI agents read podcasts, episodes, and download statistics and, with a Read/Write key, create, edit, and publish episodes and upload their audio, cover art, and transcripts. It is published on [npm](https://www.npmjs.com/package/firesidefm-mcp-server) and in the official [MCP Registry](https://registry.modelcontextprotocol.io)."
+  links:
+    - { kind: source, url: 'https://github.com/jkotzker/firesidefm-mcp-server', primary: true }
+    - { kind: npm, url: 'https://www.npmjs.com/package/firesidefm-mcp-server' }
