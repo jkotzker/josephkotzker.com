@@ -1,14 +1,14 @@
 # Curated entries; filled in Part 3. Each entry needs a unique `id`; see src/content.config.ts for the fields.
 # `summary` is one line for the home page; `description` is two or three sentences for /projects, in inline Markdown.
-# `links` (source, homebrew, npm, website, appstore, download) must mark exactly one `primary: true`,
+# `links` (source, homebrew, npm, crates, website, appstore, download) must mark exactly one `primary: true`,
 # which is where the name links on the home page.
-- id: fromscratch
-  name: FromScratch
-  summary: a minimal autosaving scratchpad for macOS, kept building on current systems
-  description: "A fork of [Kilian Valkhof](https://github.com/Kilian)'s [FromScratch](https://github.com/Kilian/fromscratch), a note-taking app whose only interface is the text you type. It runs on Apple Silicon and current macOS, and adds a redrawn icon, a font picker, and colour schemes from iTerm2 colour files."
+- id: riskgrep
+  name: RiskGrep
+  summary: a local scanner that scores files for risky data before an agent reads them or something else could expose them
+  description: "A local scanner that scores files from 0 to 100 for sensitive data, starting with secrets and biometric data. Scoring uses heuristic [YARA-X](https://virustotal.github.io/yara-x/) rules, not a model, and is local-only. It runs as a command-line tool, a git pre-commit hook, and a Claude Code hook that asks or blocks before an agent reads a sensitive file, and it is published on [crates.io](https://crates.io/crates/riskgrep)."
   links:
-    - { kind: source, url: 'https://github.com/jkotzker/fromscratch', primary: true }
-    - { kind: download, url: 'https://github.com/jkotzker/fromscratch/releases/latest' }
+    - { kind: source, url: 'https://github.com/jkotzker/riskgrep', primary: true }
+    - { kind: crates, url: 'https://crates.io/crates/riskgrep' }
 - id: firesidefm-mcp-server
   name: firesidefm-mcp-server
   summary: an unofficial MCP server for the Fireside.fm podcast hosting API
@@ -16,3 +16,11 @@
   links:
     - { kind: source, url: 'https://github.com/jkotzker/firesidefm-mcp-server', primary: true }
     - { kind: npm, url: 'https://www.npmjs.com/package/firesidefm-mcp-server' }
+- id: fromscratch
+  name: FromScratch
+  summary: a minimal autosaving scratchpad for macOS, kept building on current systems
+  description: "A fork of [Kilian Valkhof](https://github.com/Kilian)'s [FromScratch](https://github.com/Kilian/fromscratch), a note-taking app whose only interface is the text you type. It runs on Apple Silicon and current macOS, and adds a redrawn icon, a font picker, and colour schemes from iTerm2 colour files."
+  links:
+    - { kind: source, url: 'https://github.com/jkotzker/fromscratch', primary: true }
+    - { kind: download, url: 'https://github.com/jkotzker/fromscratch/releases/latest' }
+
