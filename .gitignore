@@ -23,5 +23,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# VS Code Local History extension
+.history/
+
 # private resume repo, checked out by CI (and optionally locally)
 .resume/
