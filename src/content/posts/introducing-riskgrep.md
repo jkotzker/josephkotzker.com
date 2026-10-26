@@ -3,7 +3,6 @@ title: Introducing RiskGrep
 description: RiskGrep is an open-source tool that scores files for secrets and biometric data, so a Claude Code hook, a git hook, or CI can check a file before it is read or committed.
 pubDate: 2026-10-25
 tags: [riskgrep, opensource, AI]
-draft: true
 ---
 
 Today I'm introducing a project I've been working on, but before I get to the what, I want to address the why.
@@ -51,4 +50,4 @@ The [README](https://github.com/jkotzker/riskgrep#readme) covers configuration, 
 - **A cache that stays small:** `riskgrep cache prune` removes old entries, and scans prune automatically at most once a day.
 - **An updated engine:** YARA-X 1.22.0.
 
-The full list is in the [changelog](https://github.com/jkotzker/riskgrep/blob/main/CHANGELOG.md).
+The full list is in the [release notes](https://github.com/jkotzker/riskgrep/releases/tag/v1.1.0).
