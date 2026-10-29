@@ -3,13 +3,19 @@
 // output for both. A gate that only passes on clean input proves nothing; this proves it fires
 // on what actually reaches the page.
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { verifyDist } from './verify-dist.mjs';
 
 const SENTINEL = 'GATE-SENTINEL-7f3a';
-const outDir = mkdtempSync(join(tmpdir(), 'resume-gate-'));
+// Build inside the project, not the OS temp directory: Astro moves prerendered assets out of
+// .astro/ with fs.rename, which fails (EXDEV) when the output is on another filesystem, as /tmp
+// is on GitHub's Ubuntu 26.04 runners.
+const scratchRoot = fileURLToPath(new URL('../.astro/', import.meta.url));
+mkdirSync(scratchRoot, { recursive: true });
+const outDir = mkdtempSync(join(scratchRoot, 'resume-gate-'));
+process.on('exit', () => rmSync(outDir, { recursive: true, force: true }));
 const build = spawnSync('npx', ['astro', 'build', '--outDir', outDir], {
   env: { ...process.env, RESUME_DIR: './tests/fixtures/resume-leak' },
   encoding: 'utf8',
